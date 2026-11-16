@@ -27,6 +27,11 @@ def test_agente(slug, monkeypatch):
     assert ficha["url"] == f"https://{slug}.example.com/"          # la ficha publica su dirección en la nube
     assert ficha["skills"] and "NO hace" in ficha["description"]    # dice qué hace y qué no
     assert c.get("/salud").status_code == 200
+    pagina = c.get("/")                                                        # página de inicio, sin claves embebidas
+    assert pagina.status_code == 200 and "Quién es este agente" in pagina.text and "AIza" not in pagina.text
+    perfil = c.get("/perfil").json()
+    assert perfil["blueprint"]["rol"] and len(perfil["hermanos"]) == 3 and perfil["ejemplos_chat"]
+    assert all(sk["examples"] for sk in ficha["skills"]) and len(ficha["description"]) > 300   # ficha descriptiva
     esquema = c.get("/openapi.json").json()                                    # Swagger disponible y documenta la clave
     assert "apiKey" in str(esquema["components"]["securitySchemes"]) and c.get("/docs").status_code == 200
     rpc = {"jsonrpc": "2.0", "id": 1, "method": "message/send",

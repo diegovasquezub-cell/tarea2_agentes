@@ -13,17 +13,20 @@ La clave se valida en el servidor con la variable AGENT_API_KEY (cabecera `X-API
 import hmac
 import logging
 import os
+import re
 import uuid
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request, Security
 from fastapi.security import APIKeyHeader
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from pathlib import Path
 
 load_dotenv()
 
 from agente.herramientas import HERRAMIENTAS  # noqa: E402
-from agente.prompts import DESCRIPCION_TARJETA, ESPECIALIDAD, NOMBRE, SKILLS, SYSTEM_VIAJES  # noqa: E402
+from agente.perfil import COORDINADOR, HERMANOS, PERFIL  # noqa: E402
+from agente.prompts import ESPECIALIDAD, NOMBRE, SYSTEM_VIAJES  # noqa: E402
 
 log = logging.getLogger("agente")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
@@ -77,40 +80,56 @@ def get_graph():
     return _graph
 
 
-def no_hace() -> str:
-    """Lee «No hace: ...» del blueprint del agente (misma carpeta); si no está, usa un texto general."""
+def blueprint() -> dict:
+    """Filas del blueprint del taller (blueprint.md, misma carpeta): rol, herramientas, autonomía y cuándo pide ayuda."""
+    claves = {"Rol y alcance": "rol", "Herramientas": "herramientas", "Autonomía": "autonomia", "Cuándo pide ayuda": "cuando_pide_ayuda"}
+    datos: dict = {}
     try:
-        import re
-        from pathlib import Path
-
-        bp = (Path(__file__).parent / "blueprint.md").read_text(encoding="utf-8")
-        m = re.search(r"No hace:\s*(.*?)(?:\s*\|\s*$|\s*\|)", bp, re.S)
-        if m:
-            return "NO hace: " + m.group(1).strip()
+        for linea in (Path(__file__).parent / "blueprint.md").read_text(encoding="utf-8").splitlines():
+            celdas = [c.strip() for c in linea.strip().strip("|").split("|")]
+            if len(celdas) >= 2 and celdas[0] in claves:
+                datos[claves[celdas[0]]] = celdas[1]
     except Exception:
         pass
+    return datos
+
+
+def no_hace() -> str:
+    """Texto «No hace: ...» del blueprint; si no está, usa uno general."""
+    rol = blueprint().get("rol", "")
+    m = re.search(r"No hace:\s*(.*)", rol, re.S)
+    if m:
+        return "NO hace: " + m.group(1).strip()
     return "NO hace: ejecutar cambios en sistemas reales, decidir por el negocio ni responder fuera de su especialidad."
 
 
 def ficha() -> dict:
+    descripcion = f"{PERFIL['resumen']} Cómo responde: {PERFIL['como_responde']} {no_hace()}"
     return {
         "protocolVersion": "0.3.0",
         "name": f"Agente {NOMBRE}",
-        "description": (
-            f"{DESCRIPCION_TARJETA} "
-            + no_hace()
-        ),
+        "description": descripcion,
         "url": URL_PUBLICA + "/",
         "preferredTransport": "JSONRPC",
         "version": "1.0.0",
+        "provider": {"organization": "Grupo 3 · Curso 2 · Agentes en producción", "url": COORDINADOR},
+        "documentationUrl": URL_PUBLICA + "/",
         "capabilities": {"streaming": False, "pushNotifications": False},
         "defaultInputModes": ["text/plain"],
         "defaultOutputModes": ["text/plain"],
         "securitySchemes": {"apiKey": {"type": "apiKey", "in": "header", "name": "X-API-Key"}},
         "security": [{"apiKey": []}],
         "skills": [
-            {"id": f"skill-{i}", "name": s.rstrip("."), "description": s, "tags": [ESPECIALIDAD]}
-            for i, s in enumerate(SKILLS, 1)
+            {
+                "id": f"skill-{i}",
+                "name": sk["nombre"],
+                "description": sk["descripcion"],
+                "tags": [ESPECIALIDAD, PERFIL["rol"]],
+                "examples": sk["ejemplos"],
+                "inputModes": ["text/plain"],
+                "outputModes": ["text/plain"],
+            }
+            for i, sk in enumerate(PERFIL["skills"], 1)
         ],
     }
 
@@ -134,6 +153,34 @@ def rpc_error(id_, code: int, message: str, status: int = 200) -> JSONResponse:
 @app.get("/.well-known/agent-card.json", summary="Ficha pública del agente")
 def agent_card():
     return ficha()
+
+
+PAGINA = Path(__file__).parent / "index.html"
+
+
+@app.get("/", include_in_schema=False)
+def pagina():
+    """Página de inicio del agente: quién es, skills, blueprint y un chat de prueba directa (la clave la ingresa quien prueba)."""
+    return FileResponse(PAGINA, media_type="text/html; charset=utf-8", headers={"Cache-Control": "no-cache"})
+
+
+@app.get("/perfil", summary="Perfil público del agente (alimenta la página de inicio)")
+def perfil():
+    return {
+        "nombre": f"Agente {NOMBRE}",
+        "numero": PERFIL["numero"],
+        "iniciales": PERFIL["iniciales"],
+        "rol": PERFIL["rol"],
+        "resumen": PERFIL["resumen"],
+        "como_responde": PERFIL["como_responde"],
+        "ideal_para": PERFIL["ideal_para"],
+        "herramienta": PERFIL["herramienta"],
+        "ejemplos_chat": PERFIL["ejemplos_chat"],
+        "blueprint": blueprint(),
+        "hermanos": HERMANOS,
+        "coordinador": COORDINADOR,
+        "url": URL_PUBLICA,
+    }
 
 
 @app.get("/salud")

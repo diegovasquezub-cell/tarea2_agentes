@@ -233,8 +233,9 @@ function dibujar(){
     g.appendChild(el("text",{x:cx,y:322,class:"t1","text-anchor":"middle"},partes[0]));
     g.appendChild(el("text",{x:cx,y:338,class:"t1","text-anchor":"middle"},partes.slice(1).join(" ")));
     g.appendChild(el("text",{x:cx,y:358,class:"t2","text-anchor":"middle"},especialidad(a)));
-    g.appendChild(el("text",{x:cx,y:372,class:"t2","text-anchor":"middle"},"ficha · clave propia"));
-    svg.appendChild(g);
+    g.appendChild(el("text",{x:cx,y:372,class:"t2","text-anchor":"middle"},"ver su página →"));
+    const base = (a.ficha||"").replace("/.well-known/agent-card.json","");
+    if (base){ const lk = el("a",{href:base,target:"_blank",rel:"noopener"}); lk.appendChild(g); svg.appendChild(lk); } else svg.appendChild(g);
   });
   svg.appendChild(el("text",{x:"260",y:"402",class:"lbl","text-anchor":"middle"},"AGENTES ESPECIALISTAS · A2A message/send"));
   $("#arq").replaceChildren(svg);

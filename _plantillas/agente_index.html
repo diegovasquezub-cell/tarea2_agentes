@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:ital,wght@0,600;0,700;0,800;1,800&display=swap" rel="stylesheet">
+<title>Agente · Grupo 3</title>
+{{CSS}}
+<style>
+  /* complementos de la página de agente (misma paleta que el coordinador) */
+  main{align-items:start}
+  .col{display:flex;flex-direction:column;gap:22px;min-width:0}
+  .col .card{flex:none}
+  .body{padding:16px 20px 20px}
+  .body p{margin:0 0 12px} .body p:last-child{margin-bottom:0}
+  .lead{font-size:15.5px}
+  .sub{font:700 10.5px var(--head);letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin:14px 0 6px}
+  .body ul{margin:0;padding-left:18px} .body li{margin:3px 0}
+  .skill{border:1px solid var(--line2);border-left:2px solid var(--accent);background:var(--panel2);border-radius:4px;padding:12px 14px;margin-bottom:12px}
+  .skill:last-child{margin-bottom:0}
+  .skill h3{margin:0 0 4px;font:700 13px var(--head);letter-spacing:.03em}
+  .skill p{margin:0 0 8px;color:var(--muted);font-size:13.5px}
+  .skill .chips{padding:0}
+  .kv{display:grid;grid-template-columns:150px 1fr;gap:6px 16px;font-size:13.5px}
+  .kv dt{font:700 10.5px var(--head);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);padding-top:3px}
+  .kv dd{margin:0;color:var(--text)}
+  @media(max-width:620px){.kv{grid-template-columns:1fr}}
+  .ep{width:100%;border-collapse:collapse;font-size:12.5px}
+  .ep td{padding:8px 8px;border-top:1px solid var(--line2);vertical-align:top}
+  .ep tr:first-child td{border-top:0}
+  .ep code,.curl{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:#ffc9a0;word-break:break-all}
+  :root[data-theme="light"] .ep code,:root[data-theme="light"] .curl{color:#8f4d1f}
+  .tag{display:inline-block;font:700 9.5px var(--head);letter-spacing:.12em;text-transform:uppercase;padding:2px 8px;border-radius:2px;margin-right:6px}
+  .tag.pub{background:rgba(61,220,132,.16);color:var(--ok)} .tag.priv{background:rgba(255,180,84,.18);color:var(--warn)}
+  .curl{display:block;background:var(--panel2);border:1px solid var(--line2);border-radius:4px;padding:10px 12px;margin-top:10px;white-space:pre-wrap}
+  #prueba{height:520px}
+  #log{min-height:0}
+  .linkcard a{color:var(--accent);text-decoration:none} .linkcard a:hover{text-decoration:underline}
+  svg a{cursor:pointer}
+  .agent.opaco .box{opacity:.55}
+  .agent.opaco:hover .box{opacity:1;stroke:var(--accent)}
+  header a.home{color:inherit;text-decoration:none;display:flex;align-items:center;gap:16px}
+</style>
+</head>
+<body>
+<header>
+  <a class="home" href="/"><div class="logo" id="logo">G3</div>
+  <div><h1 id="hNombre">Agente</h1><small>Grupo 3 · Agente A2A</small></div></a>
+  <div class="grow"></div>
+  <span class="pill" id="estado"><span class="dot"></span><span id="estadoTxt">conectando…</span></span>
+  <button class="ghost" id="tema" title="Cambiar tema">Tema</button>
+</header>
+
+<section class="hero" aria-label="Presentación">
+  <div class="mount"></div>
+  <div class="hero-in">
+    <p class="eyebrow" id="eyebrow">Agente · Grupo 3</p>
+    <h2 id="rol">…</h2>
+    <div class="ribbon"><em>A2A</em><b id="ribNombre">AGENTE</b><span>Ficha pública · Acceso con clave</span></div>
+  </div>
+</section>
+
+<main>
+  <div class="col">
+    <section class="card">
+      <h2>Quién es este agente</h2>
+      <div class="body">
+        <p class="lead" id="resumen"></p>
+        <div class="sub">Cómo responde</div><p id="comoResponde"></p>
+        <div class="sub">Ideal para</div><ul id="idealPara"></ul>
+        <div class="sub">Herramienta</div><p id="herramienta"></p>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Skills · qué sabe hacer</h2>
+      <div class="body" id="skills"></div>
+    </section>
+    <section class="card">
+      <h2>Blueprint del agente</h2>
+      <div class="body"><dl class="kv" id="blueprint"></dl></div>
+    </section>
+  </div>
+
+  <div class="col">
+    <section class="card" id="prueba" aria-label="Probar este agente">
+      <h2>Probar este agente directo<span class="grow"></span><span style="text-transform:none;letter-spacing:0;font-weight:400" id="convId"></span></h2>
+      <div id="log" aria-live="polite"></div>
+      <div class="chips" id="chips"></div>
+      <div class="keybar" id="keybar">
+        <span>Clave de este agente (se guarda solo en esta pestaña).</span>
+        <input id="clave" type="password" placeholder="Clave del agente" autocomplete="off">
+        <button class="ghost" id="guardar" type="button">Guardar</button>
+      </div>
+      <form id="form">
+        <textarea id="txt" placeholder="Escribe tu consulta… (Enter envía)" maxlength="2000"></textarea>
+        <button class="send" id="enviar" type="submit">Enviar</button>
+      </form>
+    </section>
+    <section class="card">
+      <h2>Cómo encaja en el sistema</h2>
+      <div id="arq" style="padding:12px 16px 4px"></div>
+      <div class="legend"><span><b style="background:var(--accent2)"></b>este agente</span><span class="linkcard">Haz clic en otro agente para abrir su página · <a id="aCoord" href="#">ir al coordinador</a></span></div>
+    </section>
+    <section class="card">
+      <h2>Ficha A2A y endpoints</h2>
+      <div class="body">
+        <table class="ep" id="eps"></table>
+        <code class="curl" id="curl"></code>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+const NS = "http://www.w3.org/2000/svg";
+const st = {key:"", conv:(crypto.randomUUID?crypto.randomUUID():String(Date.now())), ocupado:false, perfil:null, ficha:null};
+try{ st.key = sessionStorage.getItem("g3key_agente") || ""; }catch(e){}
+function el(tag, attrs={}, text){ const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(text!=null) e.textContent=text; return e; }
+function mk(tag, cls, text){ const e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+
+function burbuja(tipo, texto, o={}){
+  const m=mk("div","msg "+tipo+(o.warn?" warn":""));
+  if(o.badge){ m.appendChild(mk("span","badge "+(o.cls||""),o.badge)); m.appendChild(document.createElement("br")); }
+  m.appendChild(mk("span","",texto));
+  if(o.meta) m.appendChild(mk("span","meta",o.meta));
+  $("#log").appendChild(m); $("#log").scrollTop=$("#log").scrollHeight; return m;
+}
+
+async function enviar(texto){
+  if(st.ocupado) return;
+  if(!st.key){ $("#clave").focus(); burbuja("bot","Primero ingresa la clave de este agente (barra cobre)."); return; }
+  st.ocupado=true; $("#enviar").disabled=true; burbuja("user",texto);
+  const esp=burbuja("bot",""); esp.innerHTML='<span class="typing"><i></i><i></i><i></i></span>';
+  const t0=performance.now();
+  const rpc={jsonrpc:"2.0",id:1,method:"message/send",params:{message:{kind:"message",role:"user",contextId:st.conv,messageId:String(Date.now()),parts:[{kind:"text",text:texto}]}}};
+  try{
+    const r=await fetch("/",{method:"POST",headers:{"Content-Type":"application/json","X-API-Key":st.key},body:JSON.stringify(rpc)});
+    esp.remove();
+    if(r.status===401){ burbuja("bot","Clave incorrecta: el agente rechazó la solicitud (401).",{warn:true,badge:"Acceso rechazado",cls:"warn"}); st.key=""; try{sessionStorage.removeItem("g3key_agente")}catch(e){}; $("#keybar").style.display="flex"; return; }
+    const d=await r.json(); const seg=((performance.now()-t0)/1000).toFixed(1)+" s";
+    if(d.error){ burbuja("bot",d.error.message,{warn:true,badge:"Aviso del agente",cls:"warn",meta:seg+" · si es cuota de Gemini gratis, espera ~30 s y reintenta"}); return; }
+    const txt=(d.result.parts||[]).map(p=>p.text||"").join("\n");
+    burbuja("bot",txt,{badge:st.perfil?st.perfil.nombre:"Agente",meta:"respuesta directa del agente, sin pasar por el coordinador · "+seg});
+  }catch(e){ esp.remove(); burbuja("bot","No pude conectar con el agente.",{warn:true,badge:"Error de red",cls:"warn"}); }
+  finally{ st.ocupado=false; $("#enviar").disabled=false; $("#txt").focus(); }
+}
+
+function chip(texto, cont){ const b=mk("button","chip",texto.length>46?texto.slice(0,44)+"…":texto); b.type="button"; b.title=texto; b.addEventListener("click",()=>{ $("#txt").value=texto; $("#txt").focus(); }); cont.appendChild(b); }
+
+function dibujar(p){
+  const svg=el("svg",{viewBox:"0 0 520 250",role:"img","aria-label":"Posición de este agente en el sistema"});
+  const defs=el("defs"); const m=el("marker",{id:"fl",viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"6",markerHeight:"6",orient:"auto-start-reverse"});
+  m.appendChild(el("path",{d:"M0 0 L10 5 L0 10 z",fill:"#aaa7c4"})); defs.appendChild(m); svg.appendChild(defs);
+  const gc=el("a",{href:p.coordinador}); const g0=el("g",{class:"coord"});
+  g0.appendChild(el("rect",{x:150,y:10,width:220,height:62,rx:12,class:"box coord"}));
+  g0.appendChild(el("text",{x:260,y:36,class:"t1","text-anchor":"middle"},"Coordinador"));
+  g0.appendChild(el("text",{x:260,y:54,class:"t2","text-anchor":"middle"},"Telegram · Chat web · A2A"));
+  gc.appendChild(g0); svg.appendChild(gc);
+  const todos=p.hermanos.concat([{nombre:p.nombre,url:"",yo:true,iniciales:p.iniciales,numero:p.numero}]).sort((a,b)=>a.numero-b.numero);
+  const aw=118,gap=10,x0=(520-(todos.length*aw+(todos.length-1)*gap))/2;
+  todos.forEach((a,i)=>{
+    const x=x0+i*(aw+gap),cx=x+aw/2,yo=!!a.yo;
+    svg.appendChild(el("path",{d:`M260 72 C 260 110, ${cx} 110, ${cx} 148`,class:"edge"+(yo?" activo":""),"marker-end":"url(#fl)"}));
+    const g=el("g",{class:"agent"+(yo?" activo":" opaco")});
+    g.appendChild(el("rect",{x,y:152,width:aw,height:84,rx:12,class:"box agent"}));
+    const partes=a.nombre.replace(/^Agente\s+/i,"").split(" ");
+    g.appendChild(el("text",{x:cx,y:182,class:"t1","text-anchor":"middle"},partes[0]));
+    g.appendChild(el("text",{x:cx,y:198,class:"t1","text-anchor":"middle"},partes.slice(1).join(" ")));
+    g.appendChild(el("text",{x:cx,y:220,class:"t2","text-anchor":"middle"},yo?"estás aquí":"ver su página"));
+    if(yo) svg.appendChild(g); else { const link=el("a",{href:a.url}); link.appendChild(g); svg.appendChild(link); }
+  });
+  $("#arq").replaceChildren(svg);
+}
+
+function renderPerfil(p, f){
+  document.title = p.nombre + " · Grupo 3";
+  $("#hNombre").textContent=p.nombre; $("#logo").textContent=p.iniciales; $("#ribNombre").textContent=p.nombre.replace(/^Agente\s+/i,"").toUpperCase();
+  $("#eyebrow").textContent="Agente "+p.numero+" de 4 · Grupo 3 · Curso 2"; $("#rol").textContent=p.rol;
+  $("#resumen").textContent=p.resumen; $("#comoResponde").textContent=p.como_responde; $("#herramienta").textContent=p.herramienta;
+  p.ideal_para.forEach(t=>$("#idealPara").appendChild(mk("li","",t)));
+  f.skills.forEach(s=>{
+    const box=mk("div","skill"); box.appendChild(mk("h3","",s.name)); box.appendChild(mk("p","",s.description));
+    const c=mk("div","chips"); (s.examples||[]).forEach(e=>chip(e,c)); box.appendChild(c); $("#skills").appendChild(box);
+  });
+  const bp=p.blueprint, orden=[["Rol y alcance","rol"],["Herramientas","herramientas"],["Autonomía","autonomia"],["Cuándo pide ayuda","cuando_pide_ayuda"]];
+  orden.forEach(([t,k])=>{ if(bp[k]){ $("#blueprint").appendChild(mk("dt","",t)); $("#blueprint").appendChild(mk("dd","",bp[k])); } });
+  p.ejemplos_chat.forEach(e=>chip(e,$("#chips")));
+  const base=location.origin;
+  const filas=[["pub","GET","/.well-known/agent-card.json","Ficha pública: qué hace, qué no hace y dónde encontrarlo"],["pub","GET","/salud","Estado del servicio"],["pub","GET","/docs","Swagger con ejemplo de solicitud"],["priv","POST","/","JSON-RPC message/send · exige la clave en X-API-Key"]];
+  filas.forEach(([t,m,ruta,desc])=>{ const tr=document.createElement("tr"); const td1=document.createElement("td"); td1.appendChild(mk("span","tag "+t,t==="pub"?"público":"con clave")); td1.appendChild(mk("code","",m+" "));
+    const a=mk("a","",ruta); if(m==="GET"){ a.href=ruta; a.style.color="inherit"; } td1.appendChild(m==="GET"?(()=>{const c=mk("code");c.appendChild(a);return c;})():mk("code","",ruta)); const td2=mk("td","",desc); tr.appendChild(td1); tr.appendChild(td2); $("#eps").appendChild(tr); });
+  $("#curl").textContent=`curl -X POST ${base}/ -H "X-API-Key: <CLAVE_DEL_AGENTE>" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","id":1,"method":"message/send","params":{"message":{"kind":"message","role":"user","contextId":"prueba-1","messageId":"m1","parts":[{"kind":"text","text":"hola"}]}}}'`;
+  $("#aCoord").href=p.coordinador; dibujar(p);
+  burbuja("bot","Hola. Soy "+p.nombre+". Esta es mi página: puedes escribirme directo (con mi clave) sin pasar por el coordinador, o abrir uno de mis ejemplos.",{badge:p.nombre});
+}
+
+async function cargar(){
+  try{
+    const [p,f]=await Promise.all([fetch("/perfil").then(r=>r.json()),fetch("/.well-known/agent-card.json").then(r=>r.json())]);
+    st.perfil=p; st.ficha=f; renderPerfil(p,f);
+  }catch(e){ document.body.appendChild(mk("p","","No pude cargar la ficha del agente.")); }
+  try{ const r=await fetch("/salud"); $("#estado .dot").className="dot "+(r.ok?"ok":"bad"); $("#estadoTxt").textContent=r.ok?"agente en línea":"agente con problemas"; }
+  catch(e){ $("#estado .dot").className="dot bad"; $("#estadoTxt").textContent="sin conexión"; }
+}
+$("#convId").textContent="conversación "+st.conv.slice(0,8);
+$("#form").addEventListener("submit",e=>{ e.preventDefault(); const v=$("#txt").value.trim(); if(!v) return; $("#txt").value=""; enviar(v); });
+$("#txt").addEventListener("keydown",e=>{ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); $("#form").requestSubmit(); }});
+$("#guardar").addEventListener("click",()=>{ const v=$("#clave").value.trim(); if(!v) return; st.key=v; try{sessionStorage.setItem("g3key_agente",v)}catch(e){}; $("#clave").value=""; $("#keybar").style.display="none"; $("#txt").focus(); });
+$("#clave").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); $("#guardar").click(); }});
+$("#tema").addEventListener("click",()=>{ const r=document.documentElement; const n=r.dataset.theme==="light"?"dark":"light"; r.dataset.theme=n; try{localStorage.setItem("g3tema",n)}catch(e){} });
+try{ const t=localStorage.getItem("g3tema"); if(t) document.documentElement.dataset.theme=t; }catch(e){}
+if(st.key) $("#keybar").style.display="none";
+cargar(); setInterval(()=>fetch("/salud").then(r=>{ $("#estado .dot").className="dot "+(r.ok?"ok":"bad"); }).catch(()=>{ $("#estado .dot").className="dot bad"; }),30000);
+</script>
+</body>
+</html>
