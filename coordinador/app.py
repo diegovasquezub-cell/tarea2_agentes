@@ -25,6 +25,9 @@ from nucleo import EQUIPO, responder  # noqa: E402
 
 log = logging.getLogger("coordinador.api")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
+# httpx registra cada URL, y la de Telegram contiene el token del bot: no debe quedar en los logs
+for _nombre in ("httpx", "httpx2", "httpcore"):
+    logging.getLogger(_nombre).setLevel(logging.WARNING)
 
 COORD_API_KEY = os.environ.get("COORD_API_KEY", "")
 WEBHOOK_SECRET = os.environ.get("TELEGRAM_WEBHOOK_SECRET", "")
