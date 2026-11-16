@@ -77,14 +77,28 @@ def get_graph():
     return _graph
 
 
+def no_hace() -> str:
+    """Lee «No hace: ...» del blueprint del agente (misma carpeta); si no está, usa un texto general."""
+    try:
+        import re
+        from pathlib import Path
+
+        bp = (Path(__file__).parent / "blueprint.md").read_text(encoding="utf-8")
+        m = re.search(r"No hace:\s*(.*?)(?:\s*\|\s*$|\s*\|)", bp, re.S)
+        if m:
+            return "NO hace: " + m.group(1).strip()
+    except Exception:
+        pass
+    return "NO hace: ejecutar cambios en sistemas reales, decidir por el negocio ni responder fuera de su especialidad."
+
+
 def ficha() -> dict:
     return {
         "protocolVersion": "0.3.0",
         "name": f"Agente {NOMBRE}",
         "description": (
             f"{DESCRIPCION_TARJETA} "
-            "NO hace: ejecutar ni desplegar cambios en sistemas reales, tomar decisiones de negocio ni "
-            "responder fuera de su especialidad (en ese caso lo dice y deriva)."
+            + no_hace()
         ),
         "url": URL_PUBLICA + "/",
         "preferredTransport": "JSONRPC",

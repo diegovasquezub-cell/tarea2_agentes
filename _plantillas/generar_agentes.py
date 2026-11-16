@@ -1,4 +1,5 @@
 """Genera agentes/<slug>/ a partir de los proyectos del taller A2A y la plantilla común."""
+import re
 import shutil
 from pathlib import Path
 
@@ -9,6 +10,12 @@ AGENTES = {  # slug: (carpeta origen, integrante)
     "diego": ("segundo-agente", "Diego Vasquez"),
     "jaime": ("tercer-agente", "Jaime Vidal"),
     "henry": ("cuarto-agente", "Henry Ambicho"),
+}
+URLS_NUBE = {
+    "gerardo": "https://g3-a2a-gerardo-106ec27110d5.herokuapp.com",
+    "diego": "https://g3-a2a-diego-835311cf3a46.herokuapp.com",
+    "jaime": "https://g3-a2a-jaime-247f1f25d28a.herokuapp.com",
+    "henry": "https://g3-a2a-henry-3278a379eb91.herokuapp.com",
 }
 REQ = """# runtime del agente (versiones validadas en el taller A2A)
 fastapi>=0.115
@@ -39,7 +46,11 @@ for slug, (carpeta, integrante) in AGENTES.items():
     (d / "agente" / "__init__.py").write_text("")
     for f in ("prompts.py", "herramientas.py"):
         shutil.copy(ORIGEN / carpeta / "src" / "agente_viajes" / f, d / "agente" / f)
-    shutil.copy(ORIGEN / carpeta / "blueprint.md", d / "blueprint.md")
+    bp = (ORIGEN / carpeta / "blueprint.md").read_text(encoding="utf-8")
+    bp = re.sub(r"\| Dónde se ejecuta\s*\|[^\n]*",
+                f"| Dónde se ejecuta  | Nube (Heroku): {URLS_NUBE[slug]} · ficha en /.well-known/agent-card.json · local: puerto 800X (ver README) |", bp)
+    bp = bp.replace("Taller práctico A2A", "Taller práctico A2A · entrega del sistema de agentes")
+    (d / "blueprint.md").write_text(bp, encoding="utf-8")
     shutil.copy(Path(__file__).parent / "agente_app.py", d / "app.py")
     (d / "requirements.txt").write_text(REQ)
     (d / ".env.example").write_text(ENV)

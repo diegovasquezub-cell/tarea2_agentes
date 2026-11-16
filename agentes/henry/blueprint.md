@@ -1,6 +1,6 @@
 # Blueprint · Agente Henry Ambicho
 
-**Autor:** Henry Ambicho · **Grupo:** Grupo 3 · Taller práctico A2A
+**Autor:** Henry Ambicho · **Grupo:** Grupo 3 · Taller práctico A2A · entrega del sistema de agentes
 
 | Qué definir       | Mi agente |
 |-------------------|-----------|
@@ -8,4 +8,4 @@
 | Herramientas      | consultar_mis_apuntes (consulta los apuntes con conceptos, criterios y caso; con tema vacío devuelve todos). |
 | Autonomía         | Decide solo: qué apunte consultar, cómo comparar las alternativas técnicas y qué MVP sugerir. Nunca sin una persona: publicar en tiendas, desplegar en producción, usar la ubicación del usuario sin su consentimiento explícito, comprometer plazos o costos, ni afirmar experiencias personales que no estén en sus apuntes. |
 | Cuándo pide ayuda | Pregunta si falta: las plataformas objetivo (iOS, Android o web), la conectividad real de los usuarios y el equipo y plazo disponibles. Deriva a otro especialista cuando: la consulta es de otra área (por ejemplo datos, operación de planta o legal) o exige una decisión de negocio. |
-| Dónde se ejecuta  | http://127.0.0.1:2028 · grafo agente_henry |
+| Dónde se ejecuta  | Nube (Heroku): https://g3-a2a-henry-3278a379eb91.herokuapp.com · ficha en /.well-known/agent-card.json · local: puerto 800X (ver README) |

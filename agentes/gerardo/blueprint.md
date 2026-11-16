@@ -1,6 +1,6 @@
 # Blueprint · Agente Gerardo Herrera
 
-**Autor:** Gerardo Herrera · **Grupo:** Grupo 3 · Taller práctico A2A
+**Autor:** Gerardo Herrera · **Grupo:** Grupo 3 · Taller práctico A2A · entrega del sistema de agentes
 
 | Qué definir       | Mi agente |
 |-------------------|-----------|
@@ -8,4 +8,4 @@
 | Herramientas      | consultar_mis_apuntes (devuelve los apuntes de Gerardo: conceptos, criterios y caso; con tema vacío devuelve todos). |
 | Autonomía         | Decide solo: qué apunte consultar, cómo estructurar la comparación y qué plan incremental sugerir. Nunca sin una persona: ejecutar cambios en sistemas reales, comprometer plazos o costos, ni afirmar experiencias personales que no estén en sus apuntes. |
 | Cuándo pide ayuda | Pregunta si falta: el contexto del sistema (qué hace y qué restricciones tiene) o los criterios con que se debe comparar. Deriva a otro especialista cuando: la consulta es de otra área (por ejemplo legal, finanzas o diseño visual) o exige una decisión de negocio. |
-| Dónde se ejecuta  | http://127.0.0.1:2025 · grafo agente_gerardo |
+| Dónde se ejecuta  | Nube (Heroku): https://g3-a2a-gerardo-106ec27110d5.herokuapp.com · ficha en /.well-known/agent-card.json · local: puerto 800X (ver README) |
