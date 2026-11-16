@@ -54,6 +54,9 @@ def test_coordinador(monkeypatch):
     c = TestClient(m.app)
     assert c.get("/salud").status_code == 200
     assert c.get("/docs").status_code == 200 and "/chat" in c.get("/openapi.json").json()["paths"]
+    pag = c.get("/")                                                            # chat web + diagrama, sin claves embebidas
+    assert pag.status_code == 200 and "Arquitectura en vivo" in pag.text and "AIza" not in pag.text
+    assert c.get("/estado").json()["coordinador"] == "ok"
     assert c.post("/chat", json={"mensaje": "hola"}).status_code == 401
     assert c.post("/chat", json={"mensaje": "hola"}, headers={"X-API-Key": "mala"}).status_code == 401
     assert c.post("/telegram", json={}).status_code == 401

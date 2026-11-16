@@ -14,7 +14,8 @@ from dotenv import load_dotenv
 from fastapi import BackgroundTasks, FastAPI, Request, Security
 from fastapi.security import APIKeyHeader
 from pydantic import BaseModel, Field
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from pathlib import Path
 
 load_dotenv()
 
@@ -58,6 +59,33 @@ def igual(a: str, b: str) -> bool:
 async def arranque():
     await EQUIPO.refrescar(forzar=True)
     log.info("agentes cargados: %s", [a.nombre for a in EQUIPO.agentes])
+
+
+PAGINA = Path(__file__).parent / "static" / "index.html"
+
+
+@app.get("/", include_in_schema=False)
+def pagina():
+    """Chat web de prueba + diagrama de la arquitectura. No contiene ninguna clave: la ingresa quien prueba."""
+    return FileResponse(PAGINA, media_type="text/html; charset=utf-8", headers={"Cache-Control": "no-cache"})
+
+
+@app.get("/estado", summary="Estado público de los agentes (alimenta el diagrama)")
+async def estado():
+    await EQUIPO.refrescar()
+    disp = await EQUIPO.disponibles()
+    return {
+        "coordinador": "ok",
+        "agentes": [
+            {
+                "nombre": a.nombre,
+                "skills": [x.get("name", "") for x in (a.ficha or {}).get("skills", [])],
+                "ficha": a.url + "/.well-known/agent-card.json",
+                "disponible": disp.get(a.url, False),
+            }
+            for a in EQUIPO.agentes
+        ],
+    }
 
 
 @app.get("/salud")

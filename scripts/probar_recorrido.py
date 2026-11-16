@@ -11,6 +11,13 @@ import uuid
 from pathlib import Path
 
 import httpx
+
+try:  # usa el almacén de certificados del sistema (evita CERTIFICATE_VERIFY_FAILED en Windows con antivirus/proxy)
+    import truststore
+
+    truststore.inject_into_ssl()
+except ImportError:
+    pass
 from dotenv import dotenv_values
 
 RAIZ = Path(__file__).resolve().parent.parent
