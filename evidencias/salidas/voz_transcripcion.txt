@@ -1,0 +1,4 @@
+# Transcripción de voz (Gemini) · 2026-11-16 00:44 · LOCAL, misma función que usa el bot
+Audio de prueba generado con voz sintética (Windows, es-MX): evidencias/audio/prueba_voz.wav
+audio: prueba_voz.wav (339300 bytes, audio/wav)
+transcripción: Hola, tengo muchos archivos de datos desordenados en mi empresa. ¿Por dónde parto para ordenarlos en la nube?

@@ -68,3 +68,36 @@ def test_coordinador(monkeypatch):
     assert c.post("/telegram", json={}, headers={"X-Telegram-Bot-Api-Secret-Token": "mala"}).status_code == 401
     assert c.post("/chat", json={}, headers={"X-API-Key": "c-test"}).status_code == 422
     assert c.post("/chat", json={"mensaje": "x" * 5000}, headers={"X-API-Key": "c-test"}).status_code == 422
+
+
+def test_voz_telegram(monkeypatch):
+    """Nota de voz -> se transcribe -> el coordinador responde mostrando lo que entendió. Sin red ni modelo."""
+    import asyncio
+
+    m = cargar(RAIZ / "coordinador", monkeypatch, COORD_API_KEY="c", TELEGRAM_WEBHOOK_SECRET="s", URLS_AGENTES="http://127.0.0.1:9", CLAVES_AGENTES="x")
+    enviados, preguntas = [], []
+
+    async def enviar(chat_id, texto):
+        enviados.append(texto)
+
+    async def descargar(token, file_id):
+        return b"audio"
+
+    async def transcribir(audio, mime="audio/ogg"):
+        return "hola, ¿qué agentes tienes?"
+
+    async def responder(texto, hilo):
+        preguntas.append((texto, hilo))
+        return "respuesta del coordinador", []
+
+    monkeypatch.setattr(m, "enviar_telegram", enviar)
+    monkeypatch.setattr(m, "responder", responder)
+    monkeypatch.setattr(m.voz, "descargar_audio", descargar)
+    monkeypatch.setattr(m.voz, "transcribir", transcribir)
+    asyncio.run(m.procesar_update(7, {"voice": {"file_id": "f", "duration": 4, "mime_type": "audio/ogg"}}))
+    assert preguntas == [("hola, ¿qué agentes tienes?", "tg:7")]                 # el coordinador recibe el texto transcrito
+    assert enviados[-1].startswith("Entendí tu audio: «hola, ¿qué agentes tienes?»") and "respuesta del coordinador" in enviados[-1]
+    asyncio.run(m.procesar_update(7, {"voice": {"file_id": "f", "duration": 999}}))   # demasiado largo: no se procesa
+    assert "más de" in enviados[-1] and len(preguntas) == 1
+    asyncio.run(m.procesar_update(7, {"photo": [{}]}))                            # foto/sticker: no se puede leer
+    assert enviados[-1].startswith("No puedo leer ese tipo de mensaje") and len(preguntas) == 1

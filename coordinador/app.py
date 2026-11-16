@@ -20,6 +20,7 @@ from pathlib import Path
 load_dotenv()
 
 import swagger_tema  # noqa: E402
+import voz  # noqa: E402
 from nucleo import EQUIPO, responder  # noqa: E402
 
 log = logging.getLogger("coordinador.api")
@@ -39,7 +40,7 @@ app = FastAPI(
     description=(
         "Coordinador del sistema de agentes del Grupo 3: elige a qué agente preguntarle, conserva su respuesta y recuerda "
         "la conversación. `POST /chat` exige la clave del coordinador (**Authorize**, cabecera `X-API-Key`); `POST /telegram` "
-        "exige el secreto del webhook de Telegram. Límite conocido: Gemini en capa gratuita (15 solicitudes por minuto); si se "
+        "exige el secreto del webhook de Telegram (acepta texto y notas de voz, que se transcriben con Gemini). Límite conocido: Gemini en capa gratuita (15 solicitudes por minuto); si se "
         "supera, el sistema avisa que el proveedor falló en vez de simular una respuesta. La memoria vive en el servidor y se "
         "pierde al reiniciar."
     ),
@@ -135,16 +136,31 @@ async def enviar_telegram(chat_id: int, texto: str):
                 log.error("sendMessage falló: HTTP %s", r.status_code)
 
 
-async def procesar_update(chat_id: int, texto: str | None):
+async def procesar_update(chat_id: int, msg: dict):
+    texto = msg.get("text")
+    prefijo = ""
+    nota = msg.get("voice") or msg.get("audio")
+    if texto is None and nota:  # nota de voz o archivo de audio: se transcribe antes de llegar al coordinador
+        if int(nota.get("duration", 0)) > voz.MAX_SEGUNDOS:
+            await enviar_telegram(chat_id, f"Tu audio dura más de {voz.MAX_SEGUNDOS} segundos. Envía uno más corto o escríbeme tu consulta.")
+            return
+        try:
+            audio = await voz.descargar_audio(BOT_TOKEN, nota["file_id"])
+            texto = await voz.transcribir(audio, nota.get("mime_type") or "audio/ogg")
+        except voz.ErrorVoz as exc:
+            await enviar_telegram(chat_id, str(exc))
+            return
+        log.info("telegram chat=%s audio transcrito (%s caracteres)", chat_id, len(texto))
+        prefijo = f"Entendí tu audio: «{texto}»\n\n"  # se muestra lo entendido para que el usuario pueda corregir
     if texto is None:
-        await enviar_telegram(chat_id, "No puedo leer ese tipo de mensaje (fotos, stickers, audios u otros archivos). Escríbeme tu consulta en texto.")
+        await enviar_telegram(chat_id, "No puedo leer ese tipo de mensaje (fotos, stickers u otros archivos). Escríbeme tu consulta en texto o mándame una nota de voz.")
         return
     if len(texto) > MAX_CHARS:
         await enviar_telegram(chat_id, f"Tu mensaje es demasiado largo (máximo {MAX_CHARS} caracteres).")
         return
     respuesta, saltos = await responder(texto, f"tg:{chat_id}")
     log.info("telegram chat=%s saltos=%s", chat_id, saltos)
-    await enviar_telegram(chat_id, respuesta)
+    await enviar_telegram(chat_id, prefijo + respuesta)
 
 
 @app.post("/telegram", dependencies=[Security(secreto_docs)], summary="Webhook de Telegram")
@@ -167,5 +183,5 @@ async def telegram(request: Request, tareas: BackgroundTasks):
     if CHATS_PERMITIDOS and str(chat_id) not in CHATS_PERMITIDOS:
         log.warning("chat no autorizado: %s", chat_id)
         return {"ok": True}
-    tareas.add_task(procesar_update, chat_id, msg.get("text"))
+    tareas.add_task(procesar_update, chat_id, msg)
     return {"ok": True}
