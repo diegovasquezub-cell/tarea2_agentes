@@ -1,0 +1,51 @@
+# Saltos del coordinador (NUBE) · 2026-11-16 00:45
+agentes leidos desde sus fichas publicas: ['Agente Gerardo Herrera', 'Agente Diego Vasquez', 'Agente Jaime Vidal', 'Agente Henry Ambicho']
+
+>>> Tengo muchos archivos de datos desordenados en mi empresa, por donde parto para ordenarlos en la nube?
+    [salto] supervisor decide: accion=agente agente=Agente Diego Vasquez
+    [salto] coordinador -> Agente Diego Vasquez (https://g3-a2a-diego-835311cf3a46.herokuapp.com) pregunta='Tengo muchos archivos de datos desordenados en mi empresa, por donde parto para ordenarlos en la nube?'
+    [salto] Agente Diego Vasquez respondió en 2.8s
+<<< Respuesta de Agente Diego Vasquez:
+
+Para ordenar esos datos en la nube sin morir en el intento, primero necesito entender: ¿de dónde viene exactamente ese flujo de datos, cuál es su volumetría y quién los va a consumir al final?
+
+Imagina esto como una planta de tratamiento de agua: si metes el agua turbia directo a la llave de las casas, nadie se la va a tomar. Los datos entran crudos desde distin…
+
+>>> Mi equipo de desarrollo entrega lento y con errores, como mejoro la forma en que trabajamos?
+    [salto] supervisor decide: accion=agente agente=Agente Gerardo Herrera
+    [salto] coordinador -> Agente Gerardo Herrera (https://g3-a2a-gerardo-106ec27110d5.herokuapp.com) pregunta='Mi equipo de desarrollo entrega lento y con errores, como mejoro la forma en que trabajamos?'
+    [salto] Agente Gerardo Herrera respondió en 3.5s
+<<< Respuesta de Agente Gerardo Herrera:
+
+Para mejorar los tiempos de entrega y reducir errores, debemos ver el ciclo de desarrollo como una línea de producción industrial: si los cimientos fallan, todo el edificio se tambalea. El problema rara vez es la capacidad de los desarrolladores; casi siempre es la falta de automatización y visibilidad en el flujo de trabajo (el SDLC).
+
+Aquí tienes el plan de …
+
+>>> En mi fabrica de alimentos se nos echan a perder lotes, que deberia controlar?
+    [salto] supervisor decide: accion=agente agente=Agente Jaime Vidal
+    [salto] coordinador -> Agente Jaime Vidal (https://g3-a2a-jaime-247f1f25d28a.herokuapp.com) pregunta='En mi fabrica de alimentos se nos echan a perder lotes, que deberia controlar?'
+    [salto] Agente Jaime Vidal respondió en 2.8s
+<<< Respuesta de Agente Jaime Vidal:
+
+Ante pérdidas de lotes, hay que revisar la operación de inmediato. En alimentos no podemos darnos el lujo de desperdiciar producto ni poner en riesgo la inocuidad.
+
+Para controlar esto desde la planta, te sugiero revisar estos puntos clave:
+
+1) Control de temperaturas: Revisa los registros de frío en recepción, bodegas de almacenamiento y líneas de proceso. Una fl…
+
+>>> Quiero hacer una app para el celular que funcione sin internet, que me conviene?
+    [salto] supervisor decide: accion=agente agente=Henry Ambicho
+    [salto] coordinador -> Agente Henry Ambicho (https://g3-a2a-henry-3278a379eb91.herokuapp.com) pregunta='Quiero hacer una app para el celular que funcione sin internet, que me conviene?'
+    [salto] Agente Henry Ambicho respondió en 3.2s
+<<< Respuesta de Agente Henry Ambicho:
+
+Para hacer una app móvil que funcione sin internet, lo primero que debemos definir es el alcance de ese "offline-first". ¿Necesitas que funcione 100% desconectada de por vida, o que guarde datos localmente y sincronice cuando haya red?
+
+Dependiendo de tu presupuesto, plazo y equipo, tienes dos caminos principales:
+
+1) Desarrollo Nativo (Swift para iOS, Kotlin/Ja…
+
+>>> Cual es la mejor receta de ceviche de reineta?
+    [salto] supervisor decide: accion=ninguno agente=-
+    [salto] coordinador: ningún agente cubre el tema
+<<< No tengo un agente en el equipo para eso, así que prefiero no inventar una respuesta. Mis especialistas cubren: Agente Gerardo Herrera (arquitectura de software y diseño de sistemas con agentes de IA); Agente Diego Vasquez (Data Engineer Senior en Itaú Chile); Agente Jaime Vidal (Jefe de Operaciones en alimentos); Agente Henry Ambicho (Tecnología móvil, Swift, Objective-C, Kotlin, Java para Androi…

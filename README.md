@@ -18,15 +18,26 @@ agente se convirtió en un servicio A2A propio con clave, ficha pública y despl
 
 ## Direcciones públicas
 
-| Agente | Dueño | Ficha pública (sin clave) | Swagger |
-|---|---|---|---|
-| Gerardo Herrera | Gerardo | https://g3-a2a-gerardo-106ec27110d5.herokuapp.com/.well-known/agent-card.json | `/docs` |
-| Diego Vasquez | Diego | https://g3-a2a-diego-835311cf3a46.herokuapp.com/.well-known/agent-card.json | `/docs` |
-| Jaime Vidal | Jaime | https://g3-a2a-jaime-247f1f25d28a.herokuapp.com/.well-known/agent-card.json | `/docs` |
-| Henry Ambicho | Henry | https://g3-a2a-henry-3278a379eb91.herokuapp.com/.well-known/agent-card.json | `/docs` |
+| Agente | Skills | Dueño | Página, ficha pública y Swagger | Prueba directa (con su clave) |
+|---|---|---|---|---|
+| Agente Gerardo Herrera | Liderazgo técnico · DevOps y DevSecOps · Mejora continua del SDLC | Gerardo | [página](https://g3-a2a-gerardo-106ec27110d5.herokuapp.com/) · [ficha](https://g3-a2a-gerardo-106ec27110d5.herokuapp.com/.well-known/agent-card.json) · [/docs](https://g3-a2a-gerardo-106ec27110d5.herokuapp.com/docs) | `curl -X POST https://g3-a2a-gerardo-106ec27110d5.herokuapp.com/ -H "X-API-Key: <CLAVE_GERARDO>" -H "Content-Type: application/json" -d '{...}'` |
+| Agente Diego Vasquez | Pipelines con ADF y Databricks · Data lake por capas · Eficiencia y costo de datos | Diego | [página](https://g3-a2a-diego-835311cf3a46.herokuapp.com/) · [ficha](https://g3-a2a-diego-835311cf3a46.herokuapp.com/.well-known/agent-card.json) · [/docs](https://g3-a2a-diego-835311cf3a46.herokuapp.com/docs) | mismo comando con `https://g3-a2a-diego-835311cf3a46.herokuapp.com/` y `<CLAVE_DIEGO>` |
+| Agente Jaime Vidal | Supervisión de fabricación · Calidad e inocuidad · Inventarios | Jaime | [página](https://g3-a2a-jaime-247f1f25d28a.herokuapp.com/) · [ficha](https://g3-a2a-jaime-247f1f25d28a.herokuapp.com/.well-known/agent-card.json) · [/docs](https://g3-a2a-jaime-247f1f25d28a.herokuapp.com/docs) | mismo comando con `https://g3-a2a-jaime-247f1f25d28a.herokuapp.com/` y `<CLAVE_JAIME>` |
+| Agente Henry Ambicho | Full-stack · Resolución de problemas · Soluciones automatizadas | Henry | [página](https://g3-a2a-henry-3278a379eb91.herokuapp.com/) · [ficha](https://g3-a2a-henry-3278a379eb91.herokuapp.com/.well-known/agent-card.json) · [/docs](https://g3-a2a-henry-3278a379eb91.herokuapp.com/docs) | mismo comando con `https://g3-a2a-henry-3278a379eb91.herokuapp.com/` y `<CLAVE_HENRY>` |
 
-- **Coordinador:** https://g3-a2a-coordinador-22655cb5eaa9.herokuapp.com (Swagger en `/docs`)
-- **Canal:** Telegram, bot **@Grupo3_agentes_a2a_bot**
+El `-d` completo está en la sección «Prueba directa a un agente» (más abajo). Cada agente también tiene una **página de inicio**
+(`/`) con quién es, sus skills con ejemplos, su blueprint, su posición en el sistema y un chat de prueba directa.
+
+- **Coordinador:** https://g3-a2a-coordinador-22655cb5eaa9.herokuapp.com (chat web con diagrama de arquitectura en vivo; Swagger en `/docs`)
+- **Canal principal:** Telegram, bot **@Grupo3_agentes_a2a_bot** (acepta **texto y notas de voz**)
+- **Segundo canal:** chat web del coordinador (misma URL), conectado al mismo coordinador.
+
+### Voz por Telegram (extra)
+
+Si le envías una **nota de voz** (o un archivo de audio de hasta 60 s), el bot la descarga, la **transcribe con Gemini** antes de
+llegar al coordinador y responde mostrando lo que entendió («Entendí tu audio: «…»») para que puedas corregir si falló.
+Si el audio no se entiende, dura más de 60 s o el proveedor falla, avisa con un mensaje claro. La transcripción gasta una
+solicitud más de la cuota de Gemini. Prueba sin Telegram: `python scripts/probar_voz.py audio.wav`.
 
 Las claves de prueba (de cada agente, del coordinador) se entregan **por una vía privada** al equipo docente; nunca están
 en el repositorio. En los comandos de abajo se escriben como `<CLAVE_...>`.
@@ -95,7 +106,9 @@ Telegram ──► Coordinador (FastAPI) ──A2A message/send──► Agente 
   cuota gratuita**: espera `PAUSA` segundos (por defecto 14) entre mensajes y reintenta hasta `REINTENTOS` (3) veces si el
   proveedor responde «cuota excedida». Imprime fecha, lo probado y lo obtenido (sirve como evidencia). Dura unos 4 minutos.
 - `coordinador/saltos.py "pregunta" ...` imprime los **saltos** del coordinador eligiendo a cada agente (salida de terminal
-  para las evidencias).
+  para las evidencias); `scripts/saltos_nube.py` lo hace contra el sistema desplegado.
+- `scripts/probar_agentes_directo.py [--local]` prueba cada agente por separado: ficha, rechazo sin clave y respuesta con clave.
+- `scripts/probar_voz.py audio.wav` prueba la transcripción de voz.
 
 ## Levantar todo en local (Windows · PowerShell)
 
@@ -162,7 +175,13 @@ evidencias/                            una captura por resultado esperado, con f
 _plantillas/                           plantilla común de los agentes y su generador
 ```
 
+## Extras declarados
+
+Chat web como **segundo canal** conectado al mismo coordinador, y **mensajes de voz** transcritos antes de llegar al coordinador
+(ambos funcionando y con evidencia en `evidencias/`). No se implementó memoria en Postgres ni agentes de otro grupo.
+
 ## Evidencias
 
-Ver [`evidencias/`](evidencias/): una captura por cada resultado esperado (1 a 12), con entorno (LOCAL o NUBE), fecha, lo que
-se probó, lo que debía pasar y lo que pasó, más las salidas de terminal de `saltos.py` y de cada agente respondiendo solo.
+Ver [`evidencias/README.md`](evidencias/README.md): una entrada por cada resultado esperado (1 a 12), con entorno (LOCAL o NUBE), fecha,
+lo que se probó, lo que debía pasar y lo que pasó, más las salidas de terminal (`evidencias/salidas/`): saltos del coordinador y cada
+agente respondiendo solo.
