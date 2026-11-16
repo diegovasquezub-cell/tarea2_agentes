@@ -16,7 +16,8 @@ import os
 import uuid
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Security
+from fastapi.security import APIKeyHeader
 from fastapi.responses import JSONResponse
 
 load_dotenv()
@@ -37,7 +38,23 @@ FORMATO = (
     "Conserva exactamente las cifras, unidades y supuestos del usuario y declara los supuestos que uses."
 )
 
-app = FastAPI(title=f"Agente {NOMBRE}", docs_url=None, redoc_url=None, openapi_url=None)
+app = FastAPI(
+    title=f"Agente {NOMBRE} (A2A)",
+    version="1.0.0",
+    description=(
+        "Servicio A2A de un agente especialista. La ficha (`/.well-known/agent-card.json`) y `/salud` son públicas; "
+        "`POST /` (JSON-RPC `message/send`) exige la clave del agente: pulsa **Authorize** e ingresa la clave de prueba "
+        "(cabecera `X-API-Key`). Límite conocido: el modelo corre en la capa gratuita de Gemini (15 solicitudes por minuto); "
+        "si se supera, el agente responde un error claro de proveedor, no una respuesta falsa."
+    ),
+)
+clave_docs = APIKeyHeader(name="X-API-Key", auto_error=False, description="Clave del agente (la valida el servidor).")
+EJEMPLO_RPC = {
+    "jsonrpc": "2.0", "id": 1, "method": "message/send",
+    "params": {"message": {"kind": "message", "role": "user", "contextId": "mi-conversacion-1",
+                           "messageId": "m1", "parts": [{"kind": "text", "text": "Hola, ¿en qué me puedes ayudar?"}]}},
+}
+RPC_DOC = {"requestBody": {"required": True, "content": {"application/json": {"schema": {"type": "object"}, "example": EJEMPLO_RPC}}}}
 
 _graph = None
 
@@ -99,8 +116,8 @@ def rpc_error(id_, code: int, message: str, status: int = 200) -> JSONResponse:
     return JSONResponse({"jsonrpc": "2.0", "id": id_, "error": {"code": code, "message": message}}, status_code=status)
 
 
-@app.get("/.well-known/agent-card.json")
-@app.get("/.well-known/agent.json")
+@app.get("/.well-known/agent.json", include_in_schema=False)
+@app.get("/.well-known/agent-card.json", summary="Ficha pública del agente")
 def agent_card():
     return ficha()
 
@@ -114,8 +131,9 @@ def texto_de(parts) -> str:
     return "\n".join(p.get("text", "") for p in parts if isinstance(p, dict) and p.get("kind", "text") == "text").strip()
 
 
-@app.post("/")
-@app.post("/a2a")
+@app.post("/a2a", include_in_schema=False)
+@app.post("/", dependencies=[Security(clave_docs)], openapi_extra=RPC_DOC, summary="A2A message/send",
+          description="JSON-RPC 2.0 `message/send`. 401 sin clave o con clave incorrecta.")
 async def message_send(request: Request):
     if not autorizado(request):
         return JSONResponse({"error": "No autorizado: falta la clave del agente o es incorrecta."}, status_code=401)

@@ -27,6 +27,8 @@ def test_agente(slug, monkeypatch):
     assert ficha["url"] == f"https://{slug}.example.com/"          # la ficha publica su dirección en la nube
     assert ficha["skills"] and "NO hace" in ficha["description"]    # dice qué hace y qué no
     assert c.get("/salud").status_code == 200
+    esquema = c.get("/openapi.json").json()                                    # Swagger disponible y documenta la clave
+    assert "apiKey" in str(esquema["components"]["securitySchemes"]) and c.get("/docs").status_code == 200
     rpc = {"jsonrpc": "2.0", "id": 1, "method": "message/send",
            "params": {"message": {"role": "user", "parts": [{"kind": "text", "text": "hola"}]}}}
     assert c.post("/", json=rpc).status_code == 401                              # sin clave
@@ -51,6 +53,7 @@ def test_coordinador(monkeypatch):
     m.COORD_API_KEY, m.WEBHOOK_SECRET = "c-test", "s-test"
     c = TestClient(m.app)
     assert c.get("/salud").status_code == 200
+    assert c.get("/docs").status_code == 200 and "/chat" in c.get("/openapi.json").json()["paths"]
     assert c.post("/chat", json={"mensaje": "hola"}).status_code == 401
     assert c.post("/chat", json={"mensaje": "hola"}, headers={"X-API-Key": "mala"}).status_code == 401
     assert c.post("/telegram", json={}).status_code == 401

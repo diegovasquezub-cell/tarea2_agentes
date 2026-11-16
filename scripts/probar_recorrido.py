@@ -4,7 +4,9 @@ Uso:  python scripts/probar_recorrido.py [URL_COORDINADOR]     (por defecto http
 Lee las claves de secretos/claves_sistema.env. Imprime fecha, lo que se probó y lo obtenido (sirve como evidencia).
 """
 import datetime
+import os
 import sys
+import time
 import uuid
 from pathlib import Path
 
@@ -18,9 +20,22 @@ H = {"X-API-Key": cfg["COORD_API_KEY"]}
 conv = str(uuid.uuid4())
 
 
-def chat(msg, conversacion=None):
-    r = httpx.post(f"{BASE}/chat", json={"mensaje": msg, "conversacion_id": conversacion or conv}, headers=H, timeout=120)
-    d = r.json()
+# Gemini gratis = 15 solicitudes/minuto y cada mensaje usa 2-4 (supervisor + agente + herramienta).
+# Por eso se espera PAUSA segundos entre mensajes y se reintenta si el proveedor responde "cuota excedida".
+PAUSA = float(os.environ.get("PAUSA", "14"))
+REINTENTOS = int(os.environ.get("REINTENTOS", "3"))
+FALLA_PROVEEDOR = ("proveedor del modelo falló", "no está disponible en este momento")
+
+
+def chat(msg, conversacion=None, esperar_falla=False):
+    for intento in range(1, REINTENTOS + 2):
+        time.sleep(PAUSA)
+        r = httpx.post(f"{BASE}/chat", json={"mensaje": msg, "conversacion_id": conversacion or conv}, headers=H, timeout=180)
+        d = r.json()
+        if esperar_falla or not any(f in str(d.get("respuesta", "")) for f in FALLA_PROVEEDOR) or intento > REINTENTOS:
+            break
+        print(f"    (falla del proveedor, probablemente cuota gratuita; reintento {intento}/{REINTENTOS} en 40 s)")
+        time.sleep(40)
     print(f"\n>>> {msg}")
     for s in d.get("saltos", []):
         print(f"    [salto] {s}")

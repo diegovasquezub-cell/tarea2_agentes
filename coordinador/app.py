@@ -11,7 +11,9 @@ import uuid
 
 import httpx
 from dotenv import load_dotenv
-from fastapi import BackgroundTasks, FastAPI, Request
+from fastapi import BackgroundTasks, FastAPI, Request, Security
+from fastapi.security import APIKeyHeader
+from pydantic import BaseModel, Field
 from fastapi.responses import JSONResponse
 
 load_dotenv()
@@ -27,7 +29,24 @@ BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 CHATS_PERMITIDOS = {x.strip() for x in os.environ.get("TELEGRAM_CHATS_PERMITIDOS", "").split(",") if x.strip()}
 MAX_CHARS = 2000
 
-app = FastAPI(title="Coordinador Grupo 3", docs_url=None, redoc_url=None, openapi_url=None)
+app = FastAPI(
+    title="Coordinador Grupo 3 (A2A)",
+    version="1.0.0",
+    description=(
+        "Coordinador del sistema de agentes del Grupo 3: elige a qué agente preguntarle, conserva su respuesta y recuerda "
+        "la conversación. `POST /chat` exige la clave del coordinador (**Authorize**, cabecera `X-API-Key`); `POST /telegram` "
+        "exige el secreto del webhook de Telegram. Límite conocido: Gemini en capa gratuita (15 solicitudes por minuto); si se "
+        "supera, el sistema avisa que el proveedor falló en vez de simular una respuesta. La memoria vive en el servidor y se "
+        "pierde al reiniciar."
+    ),
+)
+clave_docs = APIKeyHeader(name="X-API-Key", auto_error=False, description="Clave del coordinador (la valida el servidor).")
+secreto_docs = APIKeyHeader(name="X-Telegram-Bot-Api-Secret-Token", auto_error=False, description="Secreto del webhook de Telegram.")
+
+
+class ChatIn(BaseModel):
+    mensaje: str = Field(description="Texto del usuario (máx. 2000 caracteres).", examples=["hola"])
+    conversacion_id: str | None = Field(default=None, description="Identifica la conversación (memoria). Si falta se crea una nueva.")
 _vistos: list[int] = []  # update_id ya procesados (Telegram reintenta si tarda)
 
 
@@ -46,7 +65,8 @@ def salud():
     return {"estado": "ok", "agentes": [{"nombre": a.nombre, "url": a.url} for a in EQUIPO.agentes]}
 
 
-@app.post("/chat")
+@app.post("/chat", dependencies=[Security(clave_docs)], summary="Enviar un mensaje al coordinador",
+          openapi_extra={"requestBody": {"required": True, "content": {"application/json": {"schema": ChatIn.model_json_schema(), "example": {"mensaje": "hola", "conversacion_id": "demo-1"}}}}})
 async def chat(request: Request):
     if not igual(request.headers.get("x-api-key", ""), COORD_API_KEY):
         return JSONResponse({"error": "No autorizado: falta la clave del coordinador o es incorrecta."}, status_code=401)
@@ -87,7 +107,7 @@ async def procesar_update(chat_id: int, texto: str | None):
     await enviar_telegram(chat_id, respuesta)
 
 
-@app.post("/telegram")
+@app.post("/telegram", dependencies=[Security(secreto_docs)], summary="Webhook de Telegram")
 async def telegram(request: Request, tareas: BackgroundTasks):
     if not igual(request.headers.get("x-telegram-bot-api-secret-token", ""), WEBHOOK_SECRET):
         return JSONResponse({"error": "No autorizado: secreto del webhook incorrecto."}, status_code=401)
