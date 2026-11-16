@@ -133,7 +133,7 @@
 <script>
 const $ = s => document.querySelector(s);
 const NS = "http://www.w3.org/2000/svg";
-const ESPECIALIDAD = {gerardo:"Arquitectura · DevSecOps", diego:"Datos en Azure", jaime:"Operaciones · Alimentos", henry:"Móvil · Full-Stack"};
+const ESPECIALIDAD = {gerardo:"Arquitectura · DevOps", diego:"Datos en Azure", jaime:"Operaciones · Alimentos", henry:"Móvil · Full-Stack"};
 const EJEMPLOS = [
   ["Saludo","hola"],
   ["Datos","Tengo muchos archivos de datos desordenados en mi empresa, ¿por dónde parto para ordenarlos en la nube?"],
@@ -155,7 +155,7 @@ function el(tag, attrs={}, text){ const e = document.createElementNS(NS, tag); f
 function dibujar(){
   const n = Math.max(st.agentes.length, 1), W = 520, aw = 118, gap = 10;
   const total = n*aw + (n-1)*gap, x0 = (W-total)/2;
-  const svg = el("svg", {viewBox:"0 0 520 400", role:"img", "aria-label":"Diagrama: canales, coordinador y agentes"});
+  const svg = el("svg", {viewBox:"0 0 520 412", role:"img", "aria-label":"Diagrama: canales, coordinador y agentes"});
   const defs = el("defs"); const m = el("marker", {id:"fl", viewBox:"0 0 10 10", refX:"8", refY:"5", markerWidth:"6", markerHeight:"6", orient:"auto-start-reverse"});
   m.appendChild(el("path", {d:"M0 0 L10 5 L0 10 z", fill:"#93a0c4"})); defs.appendChild(m); svg.appendChild(defs);
   // canales
@@ -175,8 +175,7 @@ function dibujar(){
   gc.appendChild(el("text",{x:260,y:191,class:"t2","text-anchor":"middle"},"Conserva la respuesta del agente sin reescribirla"));
   svg.appendChild(gc);
   // agentes
-  svg.appendChild(el("text",{x:"260",y:"268",class:"lbl","text-anchor":"middle"},"AGENTES ESPECIALISTAS · A2A message/send"));
-  st.agentes.forEach((a,i)=>{
+    st.agentes.forEach((a,i)=>{
     const x = x0 + i*(aw+gap), cx = x + aw/2, act = st.activo && corto(a.nombre)===corto(st.activo);
     svg.appendChild(el("path",{d:`M260 206 C 260 238, ${cx} 238, ${cx} 280`,class:"edge"+(act?" activo":""),"marker-end":"url(#fl)"}));
     const g = el("g",{class:"agent"+(act?" activo":"")+(a.disponible?"":" caido")});
@@ -189,6 +188,7 @@ function dibujar(){
     g.appendChild(el("text",{x:cx,y:372,class:"t2","text-anchor":"middle"},"ficha · clave propia"));
     svg.appendChild(g);
   });
+  svg.appendChild(el("text",{x:"260",y:"402",class:"lbl","text-anchor":"middle"},"AGENTES ESPECIALISTAS · A2A message/send"));
   $("#arq").replaceChildren(svg);
 }
 
