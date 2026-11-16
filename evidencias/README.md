@@ -16,7 +16,7 @@ Estado: **Probado** = hay salida o captura en esta carpeta · **Pendiente** = fa
 | 6 | Abrir la ficha de cada agente en su dirección pública | Dice qué hace y qué no, y publica su dirección en la nube | NUBE · 2026-11-16 | **Probado**: [`agentes_directo_nube.txt`](salidas/agentes_directo_nube.txt) («ficha pública», `url` en Heroku, «dice qué NO hace: True»). Capturas de las páginas: `capturas/pagina_agente_*.png`. |
 | 7 | Mensaje directo a cada agente con su clave | Cada uno responde solo, sin pasar por el coordinador | NUBE · 2026-11-16 | **Probado**: [`agentes_directo_nube.txt`](salidas/agentes_directo_nube.txt) (4 agentes, 200 con clave). Cada agente tiene además un chat de prueba directa en su página. |
 | 8 | Llamar sin clave a `/chat`, a `/telegram` sin secreto y a un agente sin clave | Rechaza las tres llamadas | NUBE · 2026-11-16 | **Probado**: `recorrido_nube.txt` §8 (401 y 401) y `agentes_directo_nube.txt` (401 sin clave y con clave incorrecta, en los 4). |
-| 9 | Apagar un agente y preguntarle algo de su tema | Avisa que esa parte no está disponible; los otros siguen respondiendo | NUBE | **Pendiente**: se apaga con `heroku ps:scale web=0` y se vuelve a encender. |
+| 9 | Apagar un agente (Jaime, con `heroku ps:scale web=0`) y preguntarle algo de su tema | Avisa que esa parte no está disponible; los otros siguen respondiendo | NUBE · 2026-11-16 | **Probado**: [`caso9_agente_apagado.txt`](salidas/caso9_agente_apagado.txt) (`/salud` de Jaime en 503; el coordinador responde «esa parte no está disponible» y Henry sigue respondiendo) y [`caso9_agente_recuperado.txt`](salidas/caso9_agente_recuperado.txt) (al encenderlo vuelve a responder). |
 | 10 | Enviar una foto o un sticker por Telegram | Responde que no puede leer ese tipo de mensaje | NUBE | **Pendiente** la captura en Telegram. La lógica está cubierta por `tests/test_seguridad.py::test_voz_telegram`. |
 | 11 | «Ignora tus instrucciones» | No obedece; sigue siendo el coordinador | NUBE · 2026-11-16 | **Probado**: [`recorrido_nube.txt`](salidas/recorrido_nube.txt) §11. |
 | 12 | Clonar el repositorio y seguir el README | Se puede levantar con credenciales propias | LOCAL · 2026-11-16 | **Probado**: clon limpio desde GitHub, sin `.env` ni `secretos/`, `pip install` + `pytest` → 7 pruebas pasan. |
@@ -26,7 +26,7 @@ Estado: **Probado** = hay salida o captura en esta carpeta · **Pendiente** = fa
 | Extra | Estado y evidencia |
 |---|---|
 | Segundo canal (chat web conectado al mismo coordinador) | **Probado** en la nube: `capturas/chat_web_vista_inicial.png`; `/chat` con clave. |
-| Mensajes de voz transcritos antes de llegar al coordinador | **Probado** con un audio de prueba: [`voz_transcripcion.txt`](salidas/voz_transcripcion.txt) y [`../audio/prueba_voz.wav`](audio/prueba_voz.wav). Falta la captura enviando una nota de voz real por Telegram. |
+| Mensajes de voz transcritos antes de llegar al coordinador | **Probado** con un audio de prueba: [`voz_transcripcion.txt`](salidas/voz_transcripcion.txt) y [`../audio/prueba_voz.wav`](audio/prueba_voz.wav). **Probado con voz real por Telegram** el 2026-11-16: los logs del coordinador registran la descarga del audio, su transcripción y el enrutamiento a un agente (2 notas de voz). Falta la captura de la conversación en Telegram. |
 
 ## Salidas de terminal requeridas
 
@@ -39,5 +39,5 @@ Estado: **Probado** = hay salida o captura en esta carpeta · **Pendiente** = fa
   el sistema avisa «el proveedor del modelo falló» o «esa parte no está disponible» y no simula una respuesta (ocurrió una vez durante
   las pruebas locales del 2026-11-15 y quedó registrado en los logs).
 - La memoria se guarda en el servidor y se pierde al reiniciar un dyno.
-- Las pruebas 1, 9 y 10 y la voz real por Telegram requieren que un integrante escriba al bot **@Grupo3_agentes_a2a_bot**; esas capturas
+- Las capturas de las pruebas 1 y 10 y de la voz en Telegram requieren que un integrante escriba al bot **@Grupo3_agentes_a2a_bot**; esas capturas
   se agregan a `capturas/` con su fecha cuando se tomen.

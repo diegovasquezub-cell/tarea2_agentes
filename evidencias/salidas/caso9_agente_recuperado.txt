@@ -1,0 +1,17 @@
+# Caso 9 · agente recuperado · NUBE · 2026-11-16 00:54
+  /salud de gerardo: 200
+  /salud de diego: 200
+  /salud de jaime: 200
+  /salud de henry: 200
+
+>>> En mi fábrica de alimentos se nos echan a perder lotes, ¿qué debería controlar?
+    [salto] supervisor decide: accion=agente agente=Jaime Vidal
+    [salto] coordinador -> Agente Jaime Vidal (https://g3-a2a-jaime-247f1f25d28a.herokuapp.com) pregunta='En mi fábrica de alimentos se nos echan a perder lotes, ¿qué debería controlar?'
+    [salto] Agente Jaime Vidal respondió en 2.2s
+<<< Respuesta de Agente Jaime Vidal:
+
+Como jefe de operaciones con 9 años en PF Alimentos, te digo directo: si se nos echan a perder lotes, estamos perdiendo plata y poniendo en riesgo la inocuidad. Eso no se tolera en planta.
+
+Para cortar esto de raíz, revisemos los puntos críticos de control en la línea y la bodega. Sigue estos 4 pasos concretos:
+
+1) Cadenas de frío y temperaturas: Revisa los registros de los equipos de refrigeración y congelación. Una sola variación en el sector de almacenamiento

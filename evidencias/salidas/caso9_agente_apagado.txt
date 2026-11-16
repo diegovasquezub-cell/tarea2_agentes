@@ -1,0 +1,26 @@
+# Caso 9 · agente apagado · NUBE · 2026-11-16 00:53
+  /salud de gerardo: 200
+  /salud de diego: 200
+  /salud de jaime: 503  <- apagado
+  /salud de henry: 200
+
+>>> En mi fábrica de alimentos se nos echan a perder lotes, ¿qué debería controlar?
+    [salto] supervisor decide: accion=agente agente=Jaime Vidal
+    [salto] coordinador -> Agente Jaime Vidal (https://g3-a2a-jaime-247f1f25d28a.herokuapp.com) pregunta='En mi fábrica de alimentos se nos echan a perder lotes, ¿qué debería controlar?'
+    [salto] Agente Jaime Vidal NO disponible: HTTP 503
+<<< No pude consultar a Agente Jaime Vidal: esa parte no está disponible en este momento. Los demás agentes del equipo siguen disponibles; puedes intentar de nuevo más tarde.
+
+-- los otros agentes siguen respondiendo: se le pregunta a henry --
+
+>>> Quiero una app móvil que funcione sin internet, ¿qué me conviene?
+    [salto] supervisor decide: accion=agente agente=Agente Henry Ambicho
+    [salto] coordinador -> Agente Henry Ambicho (https://g3-a2a-henry-3278a379eb91.herokuapp.com) pregunta='Quiero una app móvil que funcione sin internet, ¿qué me conviene?'
+    [salto] Agente Henry Ambicho respondió en 1.5s
+<<< Respuesta de Agente Henry Ambicho:
+
+Para una app que funcione sin internet, lo primero es entender el contexto real del usuario: ¿es 100% offline (trabajo en campo sin señal) o modo híbrido (sincroniza cuando hay red)?
+
+Si me pides un MVP rápido y costo-eficiente, evaluemos las opciones según tu equipo y plazo:
+
+1) Desarrollo Nativo (iOS con Swift / Android con Kotlin)
+- Es la mejor opción si necesitas acceso profundo al hardware (Bluetooth, GPS offline, almacenamiento cifrado pesado con SQLite 
