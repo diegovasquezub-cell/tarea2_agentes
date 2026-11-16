@@ -69,9 +69,13 @@ for slug, (carpeta, integrante) in AGENTES.items():
         f"COORDINADOR = {URL_COORD!r}\n", encoding="utf-8")
     css = re.search(r"<style>.*?</style>", (RAIZ / "coordinador" / "static" / "index.html").read_text(encoding="utf-8"), re.S).group(0)
     (d / "index.html").write_text((Path(__file__).parent / "agente_index.html").read_text(encoding="utf-8").replace("{{CSS}}", css), encoding="utf-8")
+    shutil.copy(Path(__file__).parent / "swagger_tema.py", d / "swagger_tema.py")
     (d / "requirements.txt").write_text(REQ)
     (d / ".env.example").write_text(ENV)
     (d / ".gitignore").write_text(GITIGNORE)
     (d / "Procfile").write_text("web: gunicorn app:app -k uvicorn.workers.UvicornWorker --workers 1 --timeout 90 --bind 0.0.0.0:$PORT\n")
     (d / ".python-version").write_text("3.12\n")
     print("ok", slug)
+
+shutil.copy(Path(__file__).parent / "swagger_tema.py", RAIZ / "coordinador" / "swagger_tema.py")
+print("ok coordinador (swagger_tema)")

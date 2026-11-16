@@ -25,6 +25,7 @@ from pathlib import Path
 load_dotenv()
 
 from agente.herramientas import HERRAMIENTAS  # noqa: E402
+import swagger_tema  # noqa: E402
 from agente.perfil import COORDINADOR, HERMANOS, PERFIL  # noqa: E402
 from agente.prompts import ESPECIALIDAD, NOMBRE, SYSTEM_VIAJES  # noqa: E402
 
@@ -43,6 +44,8 @@ FORMATO = (
 
 app = FastAPI(
     title=f"Agente {NOMBRE} (A2A)",
+    docs_url=None,
+    redoc_url=None,
     version="1.0.0",
     description=(
         "Servicio A2A de un agente especialista. La ficha (`/.well-known/agent-card.json`) y `/salud` son públicas; "
@@ -181,6 +184,15 @@ def perfil():
         "coordinador": COORDINADOR,
         "url": URL_PUBLICA,
     }
+
+
+@app.get("/docs", include_in_schema=False)
+def docs():
+    return swagger_tema.pagina(
+        app, f"Agente {NOMBRE}",
+        "API A2A del agente: ficha pública, estado y message/send (con clave). Pulsa Authorize e ingresa la clave de prueba.",
+        "/", "Página del agente", PERFIL["iniciales"],
+    )
 
 
 @app.get("/salud")

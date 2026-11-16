@@ -19,6 +19,7 @@ from pathlib import Path
 
 load_dotenv()
 
+import swagger_tema  # noqa: E402
 from nucleo import EQUIPO, responder  # noqa: E402
 
 log = logging.getLogger("coordinador.api")
@@ -32,6 +33,8 @@ MAX_CHARS = 2000
 
 app = FastAPI(
     title="Coordinador Grupo 3 (A2A)",
+    docs_url=None,
+    redoc_url=None,
     version="1.0.0",
     description=(
         "Coordinador del sistema de agentes del Grupo 3: elige a qué agente preguntarle, conserva su respuesta y recuerda "
@@ -68,6 +71,15 @@ PAGINA = Path(__file__).parent / "static" / "index.html"
 def pagina():
     """Chat web de prueba + diagrama de la arquitectura. No contiene ninguna clave: la ingresa quien prueba."""
     return FileResponse(PAGINA, media_type="text/html; charset=utf-8", headers={"Cache-Control": "no-cache"})
+
+
+@app.get("/docs", include_in_schema=False)
+def docs():
+    return swagger_tema.pagina(
+        app, "Coordinador Grupo 3",
+        "API del coordinador: chat protegido por clave, estado de los agentes y webhook de Telegram. Pulsa Authorize e ingresa la clave de prueba.",
+        "/", "Chat con el coordinador", "G3",
+    )
 
 
 @app.get("/estado", summary="Estado público de los agentes (alimenta el diagrama)")
