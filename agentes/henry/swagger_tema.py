@@ -90,8 +90,9 @@ CSS = """
   .swagger-ui section.models .model-container{background:rgba(7,10,28,.55);border-radius:4px}
   .swagger-ui svg:not(.authorize svg){fill:var(--muted)}
   .swagger-ui .arrow{fill:var(--muted)}
-  .swagger-ui .authorization__btn svg,.swagger-ui .opblock-summary-control svg.locked,.swagger-ui .authorization__btn.locked svg{fill:var(--accent)!important}
-  .swagger-ui .authorization__btn.unlocked svg{fill:var(--ok)!important}
+  .swagger-ui .authorization__btn{color:var(--accent)!important}
+  .swagger-ui .authorization__btn svg,.swagger-ui .authorization__btn svg path{fill:currentColor!important}
+  .swagger-ui .authorization__btn svg.unlocked,.swagger-ui .btn.authorize svg.unlocked{color:var(--ok)}
   .swagger-ui .loading-container .loading::after{color:var(--accent)}
   .swagger-ui .dialog-ux .modal-ux{background:#12163a;border:1px solid var(--line);border-radius:8px;color:var(--text);box-shadow:0 30px 70px rgba(0,0,0,.6)}
   .swagger-ui .dialog-ux .modal-ux-header{border-bottom:1px solid var(--line2)}
