@@ -1,0 +1,74 @@
+# Prueba directa a cada agente · 2026-11-16 00:47 · NUBE (Heroku)
+
+## Agente gerardo  https://g3-a2a-gerardo-106ec27110d5.herokuapp.com
+  ficha pública: name='Agente Gerardo Herrera' url='https://g3-a2a-gerardo-106ec27110d5.herokuapp.com/' skills=3
+  ficha dice qué NO hace: True
+  sin clave        -> 401
+  clave incorrecta -> 401
+  con clave        -> 200 en 1.7s
+  pregunta: Presentate en dos frases y dime que NO haces.
+  respuesta:
+    Soy Gerardo Herrera, consultor senior de IA en la industria financiera con 20 años de experiencia, especializado en arquitectura de software, agentes de IA y DevSecOps. Ayudo a los equipos a alinear la innovación técnica con la eficiencia financiera y la seguridad, impulsando la excelencia operacional.
+    
+    Lo que NO hago es escribir código desde cero sin una estrategia clara de arquitectura, ni implementar soluciones de IA sin supervisión humana ni marcos sólidos de seguridad y gobernanza.
+
+## Agente diego  https://g3-a2a-diego-835311cf3a46.herokuapp.com
+  ficha pública: name='Agente Diego Vasquez' url='https://g3-a2a-diego-835311cf3a46.herokuapp.com/' skills=3
+  ficha dice qué NO hace: True
+  sin clave        -> 401
+  clave incorrecta -> 401
+  con clave        -> 200 en 2.2s
+  pregunta: Tengo datos desordenados en la nube, por donde parto? Responde breve.
+  respuesta:
+    Para ordenar esos datos en la nube y evitar que nuestra planta de tratamiento procese agua turbia, primero necesito hacerte un par de preguntas clave: 
+    
+    1) ¿De dónde vienen exactamente esos datos crudos y qué volumen manejamos?
+    2) ¿Quién los va a consumir y para qué fin (reportes, modelos de Machine Learning, operaciones)?
+    
+    Como regla general en nuestra arquitectura de datos, nunca atacamos el caos directamente en producción. El plan de acción inicial es el siguiente:
+    
+    - Definir un Data Lake en capas (Bronze para el dato crudo tal como llega, Silver para el dato limpiado y estandarizado, y Gold para los datos listos para el negocio).
+    - Diseñar un pipeline inicial en Azure Data Factory para ingerir y aterrizar la información en la capa Bronze.
+    
+    ¿Cuáles son las fuentes principales de estos datos y quién será el consumidor final? Siguiente paso medible: definir el alcance de la ingesta para la capa Bronze esta misma semana.
+
+## Agente jaime  https://g3-a2a-jaime-247f1f25d28a.herokuapp.com
+  ficha pública: name='Agente Jaime Vidal' url='https://g3-a2a-jaime-247f1f25d28a.herokuapp.com/' skills=3
+  ficha dice qué NO hace: True
+  sin clave        -> 401
+  clave incorrecta -> 401
+  con clave        -> 200 en 1.9s
+  pregunta: Si produzco 1.250 kg por turno con 3 turnos y 2,5% de merma, cuantos kg buenos salen por dia?
+  respuesta:
+    Para calcular los kilogramos buenos que salen por día, vamos paso a paso con los datos de producción y merma:
+    
+    1) Producción bruta por turno: 1.250 kg.
+    2) Número de turnos al día: 3 turnos.
+    3) Producción bruta total al día: 1.250 kg x 3 turnos = 3.750 kg brutos diarios.
+    4) Porcentaje de merma: 2,5%. Esto significa que el porcentaje de producto bueno (rendimiento) es del 97,5% (100% - 2,5%).
+    5) Cálculo de kg buenos: 3.750 kg x 97,5% = 3.656,25 kg buenos por día.
+    
+    En resumen, descontando la merma en la línea, obtenemos 3.656,25 kg de producto conforme al día. ¿Necesitas que desglose esto por algún turno en particular o revisemos el indicador de merma?
+
+## Agente henry  https://g3-a2a-henry-3278a379eb91.herokuapp.com
+  ficha pública: name='Agente Henry Ambicho' url='https://g3-a2a-henry-3278a379eb91.herokuapp.com/' skills=3
+  ficha dice qué NO hace: True
+  sin clave        -> 401
+  clave incorrecta -> 401
+  con clave        -> 200 en 2.0s
+  pregunta: Que me conviene para una app movil que funcione sin internet? Responde breve.
+  respuesta:
+    Para una app móvil que funciona sin internet, lo que te conviene depende de la complejidad de los datos y la plataforma. Vamos directo al MVP:
+    
+    1) Si usas desarrollo nativo:
+    - Android (Kotlin/Java): Room (sobre SQLite) o SQLite directo para almacenamiento local.
+    - iOS (Swift/Objective-C): CoreData o SQLite (a través de GRDB o similar).
+    
+    2) Si necesitas sincronización posterior (cuando el usuario recupere internet):
+    - Diseña una arquitectura "Offline-First" con una cola de transacciones locales pendientes de enviar al servidor Node.js.
+    - Usa WebSockets o HTTP POST masivos al reconectar, manejando resolución de conflictos si el mismo dato cambió en el servidor.
+    
+    3) Multiplataforma vs Nativo:
+    - Si el proyecto tiene plazos ajustados y el equipo domina JS/TS, una base local como WatermelonDB o Realm con React Native puede acelerar el MVP. Si es rendimiento puro y hardware limitado, quédate con nativo.
+    
+    ¿Qué volumen de datos necesitas almacenar localmente y requieres sincronización con un backend en NodeJS?
