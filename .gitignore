@@ -8,3 +8,7 @@ __pycache__/
 .pytest_cache/
 secretos/
 *.local
+
+# nunca versionar archivos de claves de entrega
+CLAVES_DE_PRUEBA_PRIVADO.txt
+PRIVADO_*
