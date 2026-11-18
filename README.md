@@ -1,5 +1,7 @@
 # Sistema de agentes · Grupo 3 · Implementa y entrega tu sistema de agentes
 
+**Repositorio:** https://github.com/diegovasquezub-cell/tarea2_agentes · **Clonar:** `git clone https://github.com/diegovasquezub-cell/tarea2_agentes.git`
+
 Curso 2 · Sesión 3. Un **coordinador** al que se le escribe por **Telegram** (o por API) y **cuatro agentes especialistas**,
 uno por integrante, que se comunican por **A2A**. Todo está desplegado en **Heroku** (una app por agente y una para el
 coordinador), con HTTPS, claves y secretos fuera del repositorio.
@@ -17,6 +19,8 @@ Los perfiles, skills, apuntes y blueprints vienen del **Taller A2A** (cada carpe
 agente se convirtió en un servicio A2A propio con clave, ficha pública y despliegue independiente.
 
 ## Direcciones públicas
+
+- **Código (GitHub, público):** https://github.com/diegovasquezub-cell/tarea2_agentes
 
 | Agente | Skills | Dueño | Página, ficha pública y Swagger | Prueba directa (con su clave) |
 |---|---|---|---|---|
