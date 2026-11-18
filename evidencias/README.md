@@ -4,6 +4,10 @@ Cada fila corresponde a un resultado esperado del enunciado. **Entorno** indica 
 autor). Las salidas de terminal están en [`salidas/`](salidas/) y las capturas en [`capturas/`](capturas/). Ninguna evidencia
 contiene claves ni tokens (el repositorio se revisó con `scripts/escanear_secretos.py`; las capturas se revisan a mano).
 
+> **Respaldo:** una ejecución completa grabada del sistema desplegado (20 capturas con navegador real, recorrido completo, fichas, agente
+> apagado y logs de Telegram) está en [`respaldo/README.md`](respaldo/README.md), con una guía de qué hacer si una prueba en vivo falla
+> (casi siempre, la cuota gratuita de Gemini).
+
 Estado: **Probado** = hay salida o captura en esta carpeta · **Pendiente** = falta la captura desde Telegram (la toma el integrante).
 
 | # | Qué se probó | Qué debía pasar | Entorno · fecha | Estado y evidencia |

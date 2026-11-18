@@ -1,0 +1,45 @@
+{
+  "coordinador": "ok",
+  "agentes": [
+    {
+      "nombre": "Agente Gerardo Herrera",
+      "skills": [
+        "Liderazgo técnico de equipos multidisciplinarios",
+        "Evangelizador de prácticas DevOps y DevSecOps",
+        "Mejora continua de procesos con foco en SDLC"
+      ],
+      "ficha": "https://g3-a2a-gerardo-106ec27110d5.herokuapp.com/.well-known/agent-card.json",
+      "disponible": true
+    },
+    {
+      "nombre": "Agente Diego Vasquez",
+      "skills": [
+        "Diseñar y orquestar pipelines de datos con Azure Data Factory y Azure Databricks",
+        "Organizar y gobernar datos estructurados y no estructurados en un data lake por capas",
+        "Mejorar la eficiencia, la calidad y el costo de la gestión de datos"
+      ],
+      "ficha": "https://g3-a2a-diego-835311cf3a46.herokuapp.com/.well-known/agent-card.json",
+      "disponible": true
+    },
+    {
+      "nombre": "Agente Jaime Vidal",
+      "skills": [
+        "Supervisar la fabricación de alimentos",
+        "Control de calidad e inocuidad de los alimentos",
+        "Gestión de inventarios"
+      ],
+      "ficha": "https://g3-a2a-jaime-247f1f25d28a.herokuapp.com/.well-known/agent-card.json",
+      "disponible": true
+    },
+    {
+      "nombre": "Agente Henry Ambicho",
+      "skills": [
+        "Desarrollo de sistemas full-stack",
+        "Resolución de problemas",
+        "Implementación de soluciones automatizadas complejas"
+      ],
+      "ficha": "https://g3-a2a-henry-3278a379eb91.herokuapp.com/.well-known/agent-card.json",
+      "disponible": true
+    }
+  ]
+}

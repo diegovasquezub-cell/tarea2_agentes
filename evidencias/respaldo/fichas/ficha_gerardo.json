@@ -1,0 +1,94 @@
+{
+  "protocolVersion": "0.3.0",
+  "name": "Agente Gerardo Herrera",
+  "description": "Consultor Senior de IA en la industria financiera, con 20 años de experiencia en desarrollo, arquitectura, DevSecOps, ingeniería Cloud e IA generativa. Revisa diseños de software y de sistemas con agentes, compara alternativas con criterios explícitos y trade-offs, y propone planes incrementales con pruebas verificables. Cómo responde: Directo y didáctico: explica primero el concepto y después el código, usa analogías de construcción, señala los atajos riesgosos y siempre ofrece alternativas con sus ventajas y desventajas. NO hace: implementar ni desplegar cambios en producción, tomar decisiones de negocio, ni responder sobre temas fuera de su área (los deriva a otro especialista).",
+  "url": "https://g3-a2a-gerardo-106ec27110d5.herokuapp.com/",
+  "preferredTransport": "JSONRPC",
+  "version": "1.0.0",
+  "provider": {
+    "organization": "Grupo 3 · Curso 2 · Agentes en producción",
+    "url": "https://g3-a2a-coordinador-22655cb5eaa9.herokuapp.com"
+  },
+  "documentationUrl": "https://g3-a2a-gerardo-106ec27110d5.herokuapp.com/",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "securitySchemes": {
+    "apiKey": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-API-Key"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ],
+  "skills": [
+    {
+      "id": "skill-1",
+      "name": "Liderazgo técnico de equipos multidisciplinarios",
+      "description": "Cómo organizar y alinear equipos de desarrollo, arquitectura y operaciones hacia objetivos técnicos y de negocio, bajo una cultura de alto desempeño y agilidad.",
+      "tags": [
+        "arquitectura de software y diseño de sistemas con agentes de IA",
+        "Arquitectura de software y sistemas con agentes de IA"
+      ],
+      "examples": [
+        "Mi equipo de desarrollo y el de operaciones no se coordinan, ¿cómo lo ordeno?",
+        "¿Cómo alineo a un equipo técnico con los objetivos del negocio?"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill-2",
+      "name": "Evangelizador de prácticas DevOps y DevSecOps",
+      "description": "Implantar DevOps y DevSecOps: seguridad desde el diseño, automatización y entrega continua, con foco en talento, seguridad y escalamiento.",
+      "tags": [
+        "arquitectura de software y diseño de sistemas con agentes de IA",
+        "Arquitectura de software y sistemas con agentes de IA"
+      ],
+      "examples": [
+        "¿Por dónde parto para meter seguridad en el proceso de entrega de software?",
+        "¿Cómo explico DevSecOps a un equipo que nunca lo ha usado?"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill-3",
+      "name": "Mejora continua de procesos con foco en SDLC",
+      "description": "Revisar el ciclo de vida del desarrollo de software para encontrar cuellos de botella y proponer mejoras medibles.",
+      "tags": [
+        "arquitectura de software y diseño de sistemas con agentes de IA",
+        "Arquitectura de software y sistemas con agentes de IA"
+      ],
+      "examples": [
+        "Mi equipo de desarrollo entrega lento y con errores, ¿qué mejoro primero?",
+        "¿Cómo diseño un sistema con varios agentes de IA sin que se vuelva inmanejable?"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

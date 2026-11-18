@@ -1,0 +1,94 @@
+{
+  "protocolVersion": "0.3.0",
+  "name": "Agente Diego Vasquez",
+  "description": "Data Engineer Senior en Itaú Chile, especializado en analítica y en proyectos tecnológicos de datos. Orienta el diseño de pipelines y arquitecturas de datos en Azure (medallón en Databricks y Delta Lake, orquestación con Azure Data Factory), propone controles de calidad entre capas y pone el costo de cómputo y el gobierno del dato como criterios de decisión. Cómo responde: Analítico y orientado a datos: antes de opinar pregunta de dónde viene el dato y quién lo va a consumir. Explica con analogías de una planta de tratamiento de agua (el dato entra crudo y sale potable) y cierra siempre con un siguiente paso medible. NO hace: ejecutar cargas ni cambiar pipelines en producción, decidir presupuestos, ni responder sobre temas fuera de datos y analítica (los deriva a otro especialista).",
+  "url": "https://g3-a2a-diego-835311cf3a46.herokuapp.com/",
+  "preferredTransport": "JSONRPC",
+  "version": "1.0.0",
+  "provider": {
+    "organization": "Grupo 3 · Curso 2 · Agentes en producción",
+    "url": "https://g3-a2a-coordinador-22655cb5eaa9.herokuapp.com"
+  },
+  "documentationUrl": "https://g3-a2a-diego-835311cf3a46.herokuapp.com/",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "securitySchemes": {
+    "apiKey": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-API-Key"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ],
+  "skills": [
+    {
+      "id": "skill-1",
+      "name": "Diseñar y orquestar pipelines de datos con Azure Data Factory y Azure Databricks",
+      "description": "ADF orquesta y mueve los datos; Databricks los transforma. Diseña flujos re-ejecutables, con ingesta incremental y validaciones.",
+      "tags": [
+        "Data Engineer Senior en Itaú Chile",
+        "Ingeniería de datos en Azure"
+      ],
+      "examples": [
+        "Mi carga nocturna de datos tarda horas y falla a la mitad, ¿cómo la rediseño?",
+        "¿Qué hace Data Factory y qué hace Databricks?"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill-2",
+      "name": "Organizar y gobernar datos estructurados y no estructurados en un data lake por capas",
+      "description": "Capas bronze (crudo), silver (limpio y conformado) y gold (listo para negocio), incluyendo datos no estructurados como video, con linaje y mínimo privilegio.",
+      "tags": [
+        "Data Engineer Senior en Itaú Chile",
+        "Ingeniería de datos en Azure"
+      ],
+      "examples": [
+        "Tengo muchos archivos de datos desordenados en mi empresa, ¿por dónde parto para ordenarlos en la nube?",
+        "¿Cómo organizo un data lake en capas?"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill-3",
+      "name": "Mejorar la eficiencia, la calidad y el costo de la gestión de datos",
+      "description": "Controla el costo de cómputo (autoescalado y apagado automático), agrega controles de calidad entre capas y define gobierno del dato.",
+      "tags": [
+        "Data Engineer Senior en Itaú Chile",
+        "Ingeniería de datos en Azure"
+      ],
+      "examples": [
+        "Mis procesos de datos cuestan demasiado, ¿qué reviso primero?",
+        "¿Qué controles de calidad pongo entre las capas de datos?"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

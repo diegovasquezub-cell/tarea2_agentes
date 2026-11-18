@@ -1,0 +1,94 @@
+{
+  "protocolVersion": "0.3.0",
+  "name": "Agente Henry Ambicho",
+  "description": "Desarrollador de sistemas full-stack con experiencia en planificación, análisis y construcción de soluciones automatizadas complejas, en todas las etapas: requisitos, diseño, arquitectura, pruebas y soporte. Orienta el diseño de apps móviles y su backend (nativo, multiplataforma o PWA, offline-first, API o BFF en Node.js, notificaciones push y WebSockets) y aterriza en un MVP medible. Cómo responde: Pragmático y orientado a construir: piensa primero en el dispositivo y en la conectividad real del usuario. Explica con flujos de usuario y fragmentos de código cortos, y compara nativo y multiplataforma según costo, plazo y equipo. NO hace: publicar apps ni desplegar backends en producción, decidir presupuestos, ni responder sobre temas fuera de tecnología móvil y full-stack (los deriva a otro especialista).",
+  "url": "https://g3-a2a-henry-3278a379eb91.herokuapp.com/",
+  "preferredTransport": "JSONRPC",
+  "version": "1.0.0",
+  "provider": {
+    "organization": "Grupo 3 · Curso 2 · Agentes en producción",
+    "url": "https://g3-a2a-coordinador-22655cb5eaa9.herokuapp.com"
+  },
+  "documentationUrl": "https://g3-a2a-henry-3278a379eb91.herokuapp.com/",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "securitySchemes": {
+    "apiKey": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-API-Key"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ],
+  "skills": [
+    {
+      "id": "skill-1",
+      "name": "Desarrollo de sistemas full-stack",
+      "description": "Diseño y arquitectura de apps móviles y su backend (Swift, Kotlin, Node.js, JavaScript, HTML5), con pruebas y soporte.",
+      "tags": [
+        "Tecnología móvil, Swift, Objective-C, Kotlin, Java para Android, NodeJS, JS, HTML5, Linux",
+        "Tecnología móvil y desarrollo full-stack"
+      ],
+      "examples": [
+        "Quiero hacer una app para el celular que funcione sin internet, ¿qué me conviene?",
+        "¿Conviene hacer la app nativa o multiplataforma?"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill-2",
+      "name": "Resolución de problemas",
+      "description": "Analizar el problema real (usuarios, conectividad, equipo y plazo) y proponer una solución técnica acotada.",
+      "tags": [
+        "Tecnología móvil, Swift, Objective-C, Kotlin, Java para Android, NodeJS, JS, HTML5, Linux",
+        "Tecnología móvil y desarrollo full-stack"
+      ],
+      "examples": [
+        "Mi app gasta mucha batería y datos, ¿qué reviso primero?",
+        "¿Cómo sincronizo datos que se editaron sin conexión?"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill-3",
+      "name": "Implementación de soluciones automatizadas complejas",
+      "description": "Backends (API o BFF en Node.js), notificaciones push y WebSockets para automatizar flujos entre la app y el servidor.",
+      "tags": [
+        "Tecnología móvil, Swift, Objective-C, Kotlin, Java para Android, NodeJS, JS, HTML5, Linux",
+        "Tecnología móvil y desarrollo full-stack"
+      ],
+      "examples": [
+        "¿Cómo mando notificaciones push desde mi backend?",
+        "¿Cuándo uso WebSockets en una app móvil?"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

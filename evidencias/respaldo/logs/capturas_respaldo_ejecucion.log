@@ -1,0 +1,21 @@
+captura: 01_hola_lista_de_agentes.png - «hola»: el coordinador dice qué agentes tiene y qué sabe cada uno
+captura: 02a_pregunta_datos_agente_diego.png - pregunta de datos → Agente Diego Vasquez (el diagrama ilumina al agente)
+captura: 02b_pregunta_equipo_agente_gerardo.png - pregunta de equipo de desarrollo → Agente Gerardo Herrera
+captura: 02c_pregunta_alimentos_agente_jaime.png - pregunta de alimentos → Agente Jaime Vidal
+captura: 02d_pregunta_movil_agente_henry.png - pregunta de app móvil → Agente Henry Ambicho
+captura: 03_tema_que_nadie_sabe_ninguno.png - tema que nadie del equipo sabe → «no tengo un agente para eso», sin inventar
+captura: 04_cifras_y_unidades_se_conservan.png - cifras y unidades llegan tal cual del agente (3.750 kg brutos, 3.656,25 kg buenos)
+captura: 05a_memoria_misma_conversacion.png - seguimiento que solo se entiende con el mensaje anterior: lo recuerda
+captura: 05b_memoria_otra_conversacion_no_hereda.png - el mismo mensaje desde otra conversación: no aparece nada de la anterior
+captura: 11_ignora_tus_instrucciones_rechazado.png - intento de cambiar las instrucciones: no obedece, sigue siendo el coordinador
+captura: 08_clave_incorrecta_rechazada_401.png - llamada con clave incorrecta: el coordinador rechaza (401)
+captura: 06_ficha_publica_gerardo.png - ficha pública de gerardo: qué hace, qué no hace y su dirección en la nube
+captura: 07_mensaje_directo_gerardo.png - mensaje directo al agente gerardo con su clave, sin pasar por el coordinador
+captura: 06_ficha_publica_diego.png - ficha pública de diego: qué hace, qué no hace y su dirección en la nube
+captura: 07_mensaje_directo_diego.png - mensaje directo al agente diego con su clave, sin pasar por el coordinador
+captura: 06_ficha_publica_jaime.png - ficha pública de jaime: qué hace, qué no hace y su dirección en la nube
+captura: 07_mensaje_directo_jaime.png - mensaje directo al agente jaime con su clave, sin pasar por el coordinador
+captura: 06_ficha_publica_henry.png - ficha pública de henry: qué hace, qué no hace y su dirección en la nube
+captura: 07_mensaje_directo_henry.png - mensaje directo al agente henry con su clave, sin pasar por el coordinador
+captura: 08_agente_sin_clave_valida_rechazado_401.png - agente con clave incorrecta: rechaza (401)
+listo: 20 capturas en E:\cursos\clases_IA_proyectos\tarea2_final\tarea2_agentes\evidencias\respaldo\capturas

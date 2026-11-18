@@ -1,0 +1,18 @@
+# Extracto de logs del coordinador en Heroku (solo líneas de la aplicación; sin token; id de chat anonimizado) · 2026-11-17 22:20
+"POST /telegram HTTP/1.1" 401
+"POST /telegram HTTP/1.1" 200
+2026-11-16 03:17:12,651 INFO coordinador.api telegram chat=<anonimizado> saltos=['supervisor decide: accion=saludo agente=-', 'coordinador responde saludo (lista de agentes)']
+"POST /telegram HTTP/1.1" 200
+2026-11-16 03:17:36,905 INFO coordinador.api telegram chat=<anonimizado> saltos=['supervisor decide: accion=agente agente=Agente Diego Vasquez', "coordinador -> Agente Diego Vasquez (https://g3-a2a-diego-835311cf3a46.herokuapp.com) pregunta='Cómo se hace un p
+"POST /telegram HTTP/1.1" 200
+2026-11-16 03:49:30,503 INFO coordinador.api telegram chat=<anonimizado> audio transcrito (21 caracteres)
+2026-11-16 03:49:31,384 INFO coordinador.api telegram chat=<anonimizado> saltos=['supervisor decide: accion=ninguno agente=-', 'coordinador: ningún agente cubre el tema']
+"POST /telegram HTTP/1.1" 200
+2026-11-16 03:49:50,905 INFO coordinador.api telegram chat=<anonimizado> audio transcrito (75 caracteres)
+2026-11-16 03:49:55,070 INFO coordinador.api telegram chat=<anonimizado> saltos=['supervisor decide: accion=agente agente=Agente Gerardo Herrera', "coordinador -> Agente Gerardo Herrera (https://g3-a2a-gerardo-106ec27110d5.herokuapp.com) pregunta='¿Cuál es l
+"POST /telegram HTTP/1.1" 200
+2026-11-16 03:58:34,170 INFO coordinador.api telegram chat=<anonimizado> saltos=['supervisor decide: accion=saludo agente=-', 'coordinador responde saludo (lista de agentes)']
+"POST /telegram HTTP/1.1" 200
+2026-11-16 12:22:21,150 INFO coordinador.api telegram chat=<anonimizado> saltos=['supervisor decide: accion=saludo agente=-', 'coordinador responde saludo (lista de agentes)']
+"POST /telegram HTTP/1.1" 200
+2026-11-16 12:23:21,820 INFO coordinador.api telegram chat=<anonimizado> saltos=['supervisor decide: accion=agente agente=Diego Vasquez', "coordinador -> Agente Diego Vasquez (https://g3-a2a-diego-835311cf3a46.herokuapp.com) pregunta='Como se hace un pipeline 

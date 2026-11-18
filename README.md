@@ -180,6 +180,19 @@ _plantillas/                           plantilla común de los agentes y su gene
 Chat web como **segundo canal** conectado al mismo coordinador, y **mensajes de voz** transcritos antes de llegar al coordinador
 (ambos funcionando y con evidencia en `evidencias/`). No se implementó memoria en Postgres ni agentes de otro grupo.
 
+## Evidencias de respaldo (si una prueba en vivo falla)
+
+Además de las evidencias por resultado, el repositorio guarda una **ejecución completa grabada y fechada del sistema desplegado**
+(2026-11-16 y 2026-11-17) en [`evidencias/respaldo/`](evidencias/respaldo/README.md): 20 capturas con un navegador real (chat web y página de
+cada agente), el recorrido completo en texto, las fichas públicas de los 4 agentes, la prueba de un agente apagado y un extracto de los logs de
+Telegram (con dos notas de voz). El detalle por resultado está en ese README.
+
+**Si algo falla durante la revisión, lo más probable es la cuota gratuita de Gemini (15 solicitudes por minuto)**, no un error del sistema:
+verás «el proveedor del modelo falló» o «esa parte no está disponible» sin que haya un agente apagado. Es el comportamiento pedido (avisar, no
+inventar). Espera 60 segundos y repite, con un mensaje cada ~15 s. Otras causas esperables: el primer mensaje tras 30 minutos de inactividad
+tarda unos segundos (dyno dormido), y la memoria se borra si Heroku reinició el servidor (límite declarado). Los resultados 1 a 11 quedan
+demostrados con las evidencias de respaldo aunque una prueba en vivo no se pueda completar.
+
 ## Evidencias
 
 Ver [`evidencias/README.md`](evidencias/README.md): una entrada por cada resultado esperado (1 a 12), con entorno (LOCAL o NUBE), fecha,

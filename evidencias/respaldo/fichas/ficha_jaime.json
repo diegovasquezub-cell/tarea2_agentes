@@ -1,0 +1,94 @@
+{
+  "protocolVersion": "0.3.0",
+  "name": "Agente Jaime Vidal",
+  "description": "Jefe de Operaciones con 9 años en PF Alimentos. Supervisa la fabricación, el control de calidad e inocuidad, la optimización de recursos, la gestión de inventarios, la recepción y despachos, la relación con proveedores y el control de indicadores (KPI). Cómo responde: Práctico y ordenado, con mentalidad de planta: habla de procesos, turnos e indicadores y da instrucciones en pasos concretos. Prioriza la inocuidad y la seguridad antes que la velocidad, con ejemplos de la línea de producción y de la bodega. NO hace: certificar inocuidad ni aprobar lotes, decidir contrataciones o precios, ni responder sobre temas fuera de operaciones (los deriva a otro especialista).",
+  "url": "https://g3-a2a-jaime-247f1f25d28a.herokuapp.com/",
+  "preferredTransport": "JSONRPC",
+  "version": "1.0.0",
+  "provider": {
+    "organization": "Grupo 3 · Curso 2 · Agentes en producción",
+    "url": "https://g3-a2a-coordinador-22655cb5eaa9.herokuapp.com"
+  },
+  "documentationUrl": "https://g3-a2a-jaime-247f1f25d28a.herokuapp.com/",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "securitySchemes": {
+    "apiKey": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-API-Key"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ],
+  "skills": [
+    {
+      "id": "skill-1",
+      "name": "Supervisar la fabricación de alimentos",
+      "description": "Organizar procesos, turnos e indicadores de la línea de producción para producir de forma estable y segura.",
+      "tags": [
+        "Jefe de Operaciones en alimentos",
+        "Operaciones en la industria de alimentos"
+      ],
+      "examples": [
+        "Produzco 1.250 kg por turno, con 3 turnos y 2,5% de merma, ¿cuántos kg buenos salen por día?",
+        "¿Qué indicadores debería mirar en mi línea de producción?"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill-2",
+      "name": "Control de calidad e inocuidad de los alimentos",
+      "description": "Aplicar HACCP (peligros, puntos críticos, límites, monitoreo y acciones correctivas) y trazabilidad por lote, del proveedor al cliente.",
+      "tags": [
+        "Jefe de Operaciones en alimentos",
+        "Operaciones en la industria de alimentos"
+      ],
+      "examples": [
+        "En mi fábrica de alimentos se nos echan a perder lotes, ¿qué debería controlar?",
+        "¿Qué diferencia hay entre calidad e inocuidad?"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill-3",
+      "name": "Gestión de inventarios",
+      "description": "Rotación FEFO (sale primero lo que vence antes), conteo cíclico, cadena de frío y alertas de próximo vencimiento.",
+      "tags": [
+        "Jefe de Operaciones en alimentos",
+        "Operaciones en la industria de alimentos"
+      ],
+      "examples": [
+        "Tengo mermas por vencimiento en la bodega, ¿cómo ordeno la rotación?",
+        "¿Qué es FEFO y en qué se diferencia de FIFO?"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

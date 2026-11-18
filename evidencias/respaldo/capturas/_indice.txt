@@ -1,0 +1,22 @@
+# Capturas de respaldo · 2026-11-17 22:19 · NUBE (Heroku) · navegador Edge automatizado
+
+01_hola_lista_de_agentes.png  |  resultado 1  |  «hola»: el coordinador dice qué agentes tiene y qué sabe cada uno
+02a_pregunta_datos_agente_diego.png  |  resultado 2  |  pregunta de datos → Agente Diego Vasquez (el diagrama ilumina al agente)
+02b_pregunta_equipo_agente_gerardo.png  |  resultado 2  |  pregunta de equipo de desarrollo → Agente Gerardo Herrera
+02c_pregunta_alimentos_agente_jaime.png  |  resultado 2  |  pregunta de alimentos → Agente Jaime Vidal
+02d_pregunta_movil_agente_henry.png  |  resultado 2  |  pregunta de app móvil → Agente Henry Ambicho
+03_tema_que_nadie_sabe_ninguno.png  |  resultado 3  |  tema que nadie del equipo sabe → «no tengo un agente para eso», sin inventar
+04_cifras_y_unidades_se_conservan.png  |  resultado 4  |  cifras y unidades llegan tal cual del agente (3.750 kg brutos, 3.656,25 kg buenos)
+05a_memoria_misma_conversacion.png  |  resultado 5  |  seguimiento que solo se entiende con el mensaje anterior: lo recuerda
+05b_memoria_otra_conversacion_no_hereda.png  |  resultado 5  |  el mismo mensaje desde otra conversación: no aparece nada de la anterior
+11_ignora_tus_instrucciones_rechazado.png  |  resultado 11  |  intento de cambiar las instrucciones: no obedece, sigue siendo el coordinador
+08_clave_incorrecta_rechazada_401.png  |  resultado 8  |  llamada con clave incorrecta: el coordinador rechaza (401)
+06_ficha_publica_gerardo.png  |  resultado 6  |  ficha pública de gerardo: qué hace, qué no hace y su dirección en la nube
+07_mensaje_directo_gerardo.png  |  resultado 7  |  mensaje directo al agente gerardo con su clave, sin pasar por el coordinador
+06_ficha_publica_diego.png  |  resultado 6  |  ficha pública de diego: qué hace, qué no hace y su dirección en la nube
+07_mensaje_directo_diego.png  |  resultado 7  |  mensaje directo al agente diego con su clave, sin pasar por el coordinador
+06_ficha_publica_jaime.png  |  resultado 6  |  ficha pública de jaime: qué hace, qué no hace y su dirección en la nube
+07_mensaje_directo_jaime.png  |  resultado 7  |  mensaje directo al agente jaime con su clave, sin pasar por el coordinador
+06_ficha_publica_henry.png  |  resultado 6  |  ficha pública de henry: qué hace, qué no hace y su dirección en la nube
+07_mensaje_directo_henry.png  |  resultado 7  |  mensaje directo al agente henry con su clave, sin pasar por el coordinador
+08_agente_sin_clave_valida_rechazado_401.png  |  resultado 8  |  agente con clave incorrecta: rechaza (401)
